@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#303030</color>
+    <color name="colorPrimaryDark">#202020</color>
+    <color name="colorPrimaryLight">#CFD8DC</color>
+    <color name="colorAccent">#FFC107</color>
+    <color name="colorTextPrimary">#FFFFFF</color>
+    <color name="colorTextSecondary">#727272</color>
+    <color name="colorDivider">#B6B6B6</color>
+
+    <color name="colorWindowBackground">@color/colorPrimary</color>
+
+    <color name="colorDrawerItem">@color/colorTextPrimary</color>
+    <color name="colorDrawerItemActivated">@color/colorAccent</color>
+    <color name="colorDrawerBackground">@color/colorPrimaryDark</color>
+
+</resources>

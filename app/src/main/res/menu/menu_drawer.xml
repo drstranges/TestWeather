@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group
+        android:id="@+id/groupMain"
+        android:checkableBehavior="single"
+        android:orderInCategory="1">
+        <item
+            android:id="@+id/menu_item_weather_today"
+            android:checkable="true"
+            android:checked="false"
+            android:icon="@drawable/ic_today"
+            app:showAsAction="ifRoom"
+            android:title="@string/menu_navigation_weather_today" />
+        <item
+            android:id="@+id/menu_item_weather_week"
+            android:checkable="true"
+            android:checked="false"
+            android:icon="@drawable/ic_week"
+            app:showAsAction="ifRoom"
+            android:title="@string/menu_navigation_weather_week" />
+        <item
+            android:id="@+id/menu_item_settings"
+            android:checkable="false"
+            android:icon="@drawable/ic_settings"
+            app:showAsAction="ifRoom"
+            android:title="@string/menu_navigation_settings" />
+    </group>
+
+    <group
+        android:id="@+id/groupLogout"
+        android:checkableBehavior="single"
+        android:orderInCategory="1">
+
+        <item
+            android:id="@+id/menu_item_logout"
+            android:checkable="false"
+            android:icon="@drawable/ic_exit"
+            android:title="Logout" />
+
+        </group>
+
+</menu>
