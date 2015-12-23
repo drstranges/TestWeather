@@ -1,0 +1,21 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/pref_category_sync">
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/pref_sync_wifi_only_key"
+            android:title="@string/pref_sync_wifi_only_title"/>
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/pref_sync_update_on_start_key"
+            android:title="@string/pref_sync_update_on_start_title"/>
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/pref_sync_ask_on_start_key"
+            android:title="@string/pref_sync_ask_on_start_title"/>
+
+    </PreferenceCategory>
+</PreferenceScreen>

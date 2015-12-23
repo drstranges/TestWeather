@@ -21,7 +21,8 @@
             android:title="@string/menu_navigation_weather_week" />
         <item
             android:id="@+id/menu_item_settings"
-            android:checkable="false"
+            android:checkable="true"
+            android:checked="false"
             android:icon="@drawable/ic_settings"
             app:showAsAction="ifRoom"
             android:title="@string/menu_navigation_settings" />
