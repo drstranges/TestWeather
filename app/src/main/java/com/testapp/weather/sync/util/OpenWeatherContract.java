@@ -1,4 +1,4 @@
-package com.testapp.weather.sync;
+package com.testapp.weather.sync.util;
 
 import android.net.Uri;
 import android.support.annotation.IntRange;

@@ -3,7 +3,7 @@ package com.testapp.weather.model;
 
 import android.support.annotation.NonNull;
 
-import com.testapp.weather.sync.OpenWeatherContract;
+import com.testapp.weather.sync.util.OpenWeatherContract;
 
 import org.json.JSONArray;
 import org.json.JSONException;

@@ -1,0 +1,5 @@
+<resources>
+    <string name="forecast_content_authority" translatable="false">com.testapp.weather.forecast.provider</string>
+    <string name="sync_account_type" translatable="false">testweather.com.ua</string>
+
+</resources>

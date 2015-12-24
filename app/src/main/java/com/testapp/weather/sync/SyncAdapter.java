@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import com.testapp.weather.R;
 import com.testapp.weather.db.ForecastManager;
 import com.testapp.weather.model.ForecastItem;
+import com.testapp.weather.sync.util.OpenWeatherContract;
 import com.testapp.weather.util.LogHelper;
 import com.testapp.weather.util.PrefUtils;
 
