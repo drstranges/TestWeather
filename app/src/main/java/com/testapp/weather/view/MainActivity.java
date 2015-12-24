@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.testapp.weather.R;
 import com.testapp.weather.databinding.ActivityMainBinding;
@@ -22,8 +23,10 @@ import com.testapp.weather.view.fragment.WeekFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static final long BACK_PRESS_EXIT_DELAY = 3000; //3 sec
     private ActivityMainBinding mBinding;
     private ActionBarDrawerToggle mDrawerToggle;
+    private long mTimeLastBackPress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,11 +57,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(final MenuItem _item) {
         boolean result = selectDrawerItem(_item.getItemId());
-        closeDrawerIfOpen();
+        closeOpenedDrawer();
         return result;
     }
 
-    private boolean closeDrawerIfOpen() {
+    private boolean closeOpenedDrawer() {
         if (DrawerLayout.LOCK_MODE_UNLOCKED == mBinding.drawerLayout.getDrawerLockMode(GravityCompat.START)
                 && mBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
             mBinding.drawerLayout.closeDrawer(GravityCompat.START);
@@ -88,9 +91,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed() {
-        if (!closeDrawerIfOpen()){
+        if (closeOpenedDrawer() || !checkExitByBackPressed()) return;
             super.onBackPressed();
+    }
+
+    private boolean checkExitByBackPressed() {
+        final long timeNow = System.currentTimeMillis();
+        final long backPressDelay = timeNow - mTimeLastBackPress;
+        mTimeLastBackPress = timeNow;
+        final boolean isAllowed = backPressDelay > BACK_PRESS_EXIT_DELAY;
+        if (!isAllowed) {
+            Toast.makeText(getApplicationContext(), R.string.press_back_twice, Toast.LENGTH_SHORT).show();
         }
+        return isAllowed;
     }
 
     @Override
