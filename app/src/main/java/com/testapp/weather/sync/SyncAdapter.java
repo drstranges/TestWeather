@@ -1,13 +1,18 @@
 package com.testapp.weather.sync;
 
-import android.app.IntentService;
+import android.accounts.Account;
+import android.content.AbstractThreadedSyncAdapter;
+import android.content.ContentProviderClient;
 import android.content.Context;
-import android.content.Intent;
+import android.content.SyncResult;
+import android.os.Bundle;
 import android.text.TextUtils;
 
-import com.testapp.weather.model.ForecastItem;
+import com.testapp.weather.R;
 import com.testapp.weather.db.ForecastManager;
+import com.testapp.weather.model.ForecastItem;
 import com.testapp.weather.util.LogHelper;
+import com.testapp.weather.util.PrefUtils;
 
 import org.json.JSONObject;
 
@@ -21,37 +26,33 @@ import java.net.URL;
 import java.util.List;
 
 /**
- * Sync service for downloading data from the server
+ * Sync adapter for downloading data from the server
  * Created on 24.12.2015.
  */
-public final class SyncService extends IntentService {
+public final class SyncAdapter extends AbstractThreadedSyncAdapter {
 
-    private static final String LOG_TAG = LogHelper.makeLogTag(SyncService.class);
+    private static final String LOG_TAG = LogHelper.makeLogTag(SyncAdapter.class);
+    private static final int NUM_DAYS_SYNC = 7;
 
-    public static final String INTENT_ACTION = "com.testapp.weather.ACTION_SYNC_START";
-    public static final String EXTRA_URL = "EXTRA_URL";
-
-    public SyncService() {
-        super(SyncService.class.getName());
+    public SyncAdapter(Context context, boolean autoInitialize) {
+        super(context, autoInitialize);
     }
 
-    public static void launch(Context _context, String _url) {
-        _context.startService(getLaunchIntent(_url));
-    }
-
-    public static Intent getLaunchIntent(final String _url) {
-        final Intent intent = new Intent(INTENT_ACTION);
-        intent.setPackage("com.testapp.weather");
-        intent.putExtra(EXTRA_URL, _url);
-        return intent;
+    public SyncAdapter(Context context, boolean autoInitialize, boolean allowParallelSyncs) {
+        super(context, autoInitialize, allowParallelSyncs);
     }
 
     @Override
-    protected void onHandleIntent(final Intent intent) {
-        final String url = intent.getStringExtra(EXTRA_URL);
-        LogHelper.LOGD(LOG_TAG, "onHandleIntent.url = " + url);
-        if (TextUtils.isEmpty(url)) return;
-        final Context context = getApplicationContext();
+    public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) {
+        final Context context = getContext();
+        final String location = PrefUtils.getInstance(context).getPreferredLocation();
+        if (TextUtils.isEmpty(location)) {
+            LogHelper.LOGD(LOG_TAG, "Error: Location not found");
+            SyncStatusReceiver.sendSyncError(context, 0, context.getString(R.string.error_location_not_found));
+            return;
+        }
+        final String url = OpenWeatherContract.getDailyForecastUrl(location, NUM_DAYS_SYNC);
+        LogHelper.LOGD(LOG_TAG, "onPerformSync.url = " + url);
         SyncStatusReceiver.sendSyncStarted(context);
         try {
             String results = downloadData(url);

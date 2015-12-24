@@ -4,12 +4,16 @@
     <!--Keys-->
     <string name="pref_sync_wifi_only_key" translatable="false">pref_sync_wifi_only</string>
     <string name="pref_sync_update_on_start_key" translatable="false">pref_sync_update_on_start_key</string>
-    <string name="pref_sync_ask_on_start_key" translatable="false">pref_sync_ask_on_start_key</string>
+    <string name="pref_ask_on_exit_key" translatable="false">pref_ask_on_exit_key</string>
+    <string name="pref_location_key" translatable="false">pref_location_key</string>
 
     <!--Text-->
     <string name="pref_category_sync">Sync Weather</string>
     <string name="pref_sync_wifi_only_title">Wifi only</string>
     <string name="pref_sync_update_on_start_title">Sync on start</string>
-    <string name="pref_sync_ask_on_start_title">Ask on start</string>
+
+    <string name="pref_category_general">General</string>
+    <string name="pref_ask_on_exit_title">Ask on exit</string>
+    <string name="pref_location_title">Location</string>
 
 </resources>

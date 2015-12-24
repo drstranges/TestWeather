@@ -19,7 +19,7 @@
         </activity>
 
         <service
-            android:name=".sync.SyncService"
+            android:name=".sync.SyncAdapter"
             android:enabled="true">
             <intent-filter>
                 <action android:name="com.testapp.weather.ACTION_SYNC_START"/>

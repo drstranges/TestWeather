@@ -12,10 +12,20 @@
             android:key="@string/pref_sync_update_on_start_key"
             android:title="@string/pref_sync_update_on_start_title"/>
 
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_category_general">
+
         <SwitchPreference
             android:defaultValue="true"
-            android:key="@string/pref_sync_ask_on_start_key"
-            android:title="@string/pref_sync_ask_on_start_title"/>
+            android:key="@string/pref_ask_on_exit_key"
+            android:title="@string/pref_ask_on_exit_title"/>
+
+        <EditTextPreference
+            android:defaultValue="true"
+            android:key="@string/pref_location_key"
+            android:title="@string/pref_location_title"/>
 
     </PreferenceCategory>
+
 </PreferenceScreen>
