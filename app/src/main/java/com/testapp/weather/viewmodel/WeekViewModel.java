@@ -8,6 +8,9 @@ import com.testapp.weather.adapter.BindableAdapter;
 import com.testapp.weather.adapter.ForecastAdapter;
 import com.testapp.weather.adapter.util.ListConfig;
 import com.testapp.weather.model.ForecastItem;
+import com.testapp.weather.model.Model;
+import com.testapp.weather.util.binding.ClickAction;
+import com.testapp.weather.util.binding.OnActionClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +18,7 @@ import java.util.List;
 /**
  * Created on 25.12.2015.
  */
-public class WeekViewModel implements ViewModel, ForecastAdapter.OnForecastClickListener {
+public class WeekViewModel implements ViewModel, OnActionClickListener {
 
     private Context mContext;
     private Callback mCallback;
@@ -57,8 +60,8 @@ public class WeekViewModel implements ViewModel, ForecastAdapter.OnForecastClick
 
 
     @Override
-    public void onForecastClicked(View _view, ForecastItem _forecast) {
-        mCallback.onForecastClicked(_view, _forecast);
+    public void onActionFired(View _view, ClickAction _action, Model _model) {
+        mCallback.onForecastClicked(_view, (ForecastItem) _model);
     }
 
     private static class EmptyCallback implements Callback {

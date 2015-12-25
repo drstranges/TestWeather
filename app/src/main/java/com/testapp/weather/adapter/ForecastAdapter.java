@@ -1,12 +1,12 @@
 package com.testapp.weather.adapter;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.testapp.weather.adapter.util.BindingHolder;
 import com.testapp.weather.databinding.ItemForecastBinding;
 import com.testapp.weather.model.ForecastItem;
+import com.testapp.weather.util.binding.OnActionClickListener;
 
 import java.util.List;
 
@@ -15,22 +15,18 @@ import java.util.List;
  */
 public class ForecastAdapter extends BindableAdapter<ForecastItem> {
 
-    private final OnForecastClickListener mForecastClickListener;
+    private final OnActionClickListener mActionClickListener;
 
-    public interface OnForecastClickListener {
-        void onForecastClicked(View _view, ForecastItem _forecast);
-    }
-
-    public ForecastAdapter(final List<ForecastItem> _dataSource, OnForecastClickListener _clickListener) {
+    public ForecastAdapter(final List<ForecastItem> _dataSource, OnActionClickListener _clickListener) {
         super(_dataSource);
-        mForecastClickListener = _clickListener;
+        mActionClickListener = _clickListener;
     }
 
     @Override
     public BindingHolder onCreateViewHolder(ViewGroup _parent, int _viewType) {
         final ItemForecastBinding binding = ItemForecastBinding.
                 inflate(LayoutInflater.from(_parent.getContext()), _parent, false);
-        binding.setOnForecastClickListener(mForecastClickListener);
+        binding.setOnActionClickListener(mActionClickListener);
         return new BindingHolder(binding.getRoot());
     }
 

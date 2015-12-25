@@ -5,35 +5,38 @@
 
     <data>
 
+        <import type="com.testapp.weather.util.binding.ClickAction"/>
         <variable
             name="forecast"
             type="com.testapp.weather.model.ForecastItem"/>
         <variable
-            name="onForecastClickListener"
-            type="com.testapp.weather.adapter.ForecastAdapter.OnForecastClickListener"/>
+            name="onActionClickListener"
+            type="com.testapp.weather.util.binding.OnActionClickListener"/>
     </data>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:paddingTop="16dp"
-        app:actionClick="@{ClickAction.PROFILE}"
-        app:handler="@{actionHandler.onActionClick}"
-        app:model="@{user}">
+        android:foreground="?attr/selectableItemBackground"
+        android:onClick="@{onActionClickListener}"
+        app:action="@{ClickAction.SHOW_DETAIL}"
+        app:model="@{forecast}"
+        app:weatherId="@{forecast.weatherId}"
+        >
 
-        <ImageView
-            android:id="@+id/ivUserAvatar_RMTP"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+        <!--TODO: Check tint on different Api version-->
+        <com.testapp.weather.view.widget.SquareImageView
+            android:id="@+id/ivIcon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center_vertical|left"
-            android:layout_marginLeft="16dp"
-            android:src="@drawable/avatar_placeholder"
-            app:glideDefault="@{@drawable/avatar_placeholder}"
-            app:glideImage="@{user.userAvatarThumb}"
-            app:glidePlaceholder="@{@drawable/avatar_placeholder}"
-            app:glideTransform='@{"CIRCLE"}'
-            app:glideUseDrawableAsPlaceholder="@{true}"/>
+            android:padding="4dp"
+            tools:src="@drawable/ic_weather_sunny"
+            android:tint="@android:color/white"
+            app:weatherid="@{forecast.weatherId}"
+            app:showArtIcon="@{false}"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
