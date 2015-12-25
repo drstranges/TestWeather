@@ -45,7 +45,7 @@ import java.util.List;
  * Temperature in Kelvin (subtract 273.15 to convert to Celsius)
  * Created on 23.12.2015.
  */
-public class ForecastItem {
+public class ForecastItem implements Model {
     public Long id;
     public long dateTime;       // dataTime in milliseconds
     public int weatherId;       // Weather condition codes

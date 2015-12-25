@@ -7,4 +7,5 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="error_location_not_found">Sync failed: sorry, you should type your location on Settings page!</string>
     <string name="press_back_twice">Press back twice to exit!</string>
+    <string name="message_list_empty">Oops… It seems that there aren\\\'t any forecast for your location or Internet connection is not established.</string>
 </resources>

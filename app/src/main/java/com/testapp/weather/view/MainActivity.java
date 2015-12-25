@@ -21,7 +21,7 @@ import com.testapp.weather.util.KeyboardUtils;
 import com.testapp.weather.util.LogHelper;
 import com.testapp.weather.util.PrefUtils;
 import com.testapp.weather.view.fragment.SettingsFragment;
-import com.testapp.weather.view.fragment.TodayFragment;
+import com.testapp.weather.view.fragment.DayFragment;
 import com.testapp.weather.view.fragment.WeekFragment;
 import com.testapp.weather.viewmodel.MainViewModel;
 
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity
     private boolean selectDrawerItem(@IdRes int _itemResId) {
         switch (_itemResId) {
             case R.id.menu_item_weather_today:
-                replaceFragment(new TodayFragment());
+                replaceFragment(new DayFragment());
                 return true;
             case R.id.menu_item_weather_week:
                 replaceFragment(new WeekFragment());

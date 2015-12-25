@@ -7,14 +7,39 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.testapp.weather.databinding.FragmentWeekBinding;
+import com.testapp.weather.model.ForecastItem;
+import com.testapp.weather.viewmodel.WeekViewModel;
+
 /**
  * Created on 23.12.2015.
  */
-public class WeekFragment extends Fragment {
+public class WeekFragment extends Fragment implements WeekViewModel.Callback {
+    private WeekViewModel mViewModel;
+    private FragmentWeekBinding mBinding;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mBinding = FragmentWeekBinding.inflate(inflater, container, false);
+        mBinding.setViewModel(mViewModel = new WeekViewModel(getContext(), this));
+        return mBinding.getRoot();
+    }
 
-        return super.onCreateView(inflater, container, savedInstanceState);
+    @Override
+    public void onError(Exception _e) {
+
+    }
+
+    @Override
+    public void onForecastClicked(View _view, ForecastItem _forecast) {
+
+    }
+
+    @Override
+    public void onDestroy() {
+        mBinding.unbind();
+        mViewModel.onDestroy();
+        super.onDestroy();
     }
 }
