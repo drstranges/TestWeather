@@ -10,6 +10,7 @@ import android.os.Bundle;
 
 import com.testapp.weather.R;
 import com.testapp.weather.util.LogHelper;
+import com.testapp.weather.util.PrefUtils;
 
 import java.util.concurrent.TimeUnit;
 
@@ -21,11 +22,12 @@ public class SyncManager {
 
     private static final String LOG_TAG = LogHelper.makeLogTag(SyncManager.class);
 
-    private static final long SYNC_INTERVAL = TimeUnit.HOURS.toMillis(1); // 1 hour
-    private static final long SYNC_FLEXTIME = TimeUnit.MINUTES.toMillis(10); // 10 min
+    //    private static final long DEFAULT_SYNC_INTERVAL = TimeUnit.HOURS.toMillis(1); // 1 hour
+    private static final long DEFAULT_SYNC_FLEXTIME = TimeUnit.MINUTES.toMillis(10); // 10 min
 
     public static void initializeSyncAdapter(Context _context) {
-        getSyncAccount(_context);
+        final Account account = getSyncAccount(_context);
+        configureAccount(account, _context);
     }
 
     public static Account getSyncAccount(Context _context) {
@@ -36,23 +38,31 @@ public class SyncManager {
                 _context.getString(R.string.app_name), _context.getString(R.string.sync_account_type));
 
         // Check if account exist
-        if ( null == accountManager.getPassword(newAccount) ) {
+        if (null == accountManager.getPassword(newAccount)) {
 
             if (!accountManager.addAccountExplicitly(newAccount, "", Bundle.EMPTY)) {
                 LogHelper.LOGD(LOG_TAG, "Error while account creating...");
                 return null;
             }
             LogHelper.LOGD(LOG_TAG, "Account has been created");
-            onAccountCreated(newAccount, _context);
         }
         return newAccount;
     }
 
-    private static void onAccountCreated(Account _account, Context _context) {
-        configurePeriodicSync(_context, SYNC_INTERVAL, SYNC_FLEXTIME);
-        ContentResolver.setSyncAutomatically(_account,
-                _context.getString(R.string.forecast_content_authority), true);
-        syncImmediately(_context);
+    private static void configureAccount(Account _account, Context _context) {
+        if (_account == null) return;
+        if (PrefUtils.isAutosyncEnabled(_context)) {
+            final long syncInterval = PrefUtils.getSyncInterval(_context);
+            configurePeriodicSync(_context, syncInterval, DEFAULT_SYNC_FLEXTIME);
+            ContentResolver.setSyncAutomatically(_account,
+                    _context.getString(R.string.forecast_content_authority), true);
+        } else {
+            ContentResolver.setSyncAutomatically(_account,
+                    _context.getString(R.string.forecast_content_authority), false);
+            if (PrefUtils.isSyncOnStartEnabled(_context)) {
+                syncImmediately(_context);
+            }
+        }
     }
 
     public static void configurePeriodicSync(Context _context, long _syncInterval, long _flexTime) {

@@ -11,31 +11,51 @@ import com.testapp.weather.R;
  */
 public final class PrefUtils {
 
-    private static PrefUtils INSTANCE;
 
-    private final String KEY_SYNC_WIFI_ONLY;
-    private final String KEY_SYNC_UPDATE_ON_START;
-    private final String KEY_ASK_ON_EXIT;
-    private final String KEY_LOCATION;
-
-    private final SharedPreferences sPreferences;
-
-    private PrefUtils(Context _context) {
-        sPreferences = PreferenceManager.getDefaultSharedPreferences(_context);
-        KEY_SYNC_WIFI_ONLY = _context.getString(R.string.pref_sync_wifi_only_key);
-        KEY_SYNC_UPDATE_ON_START = _context.getString(R.string.pref_sync_update_on_start_key);
-        KEY_ASK_ON_EXIT = _context.getString(R.string.pref_ask_on_exit_key);
-        KEY_LOCATION = _context.getString(R.string.pref_location_key);
+    public static void setPreferredLocation(Context _context, String _location) {
+        final SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(_context);
+        pref.edit().putString(_context.getString(R.string.pref_location_key), _location).apply();
     }
 
-    public static PrefUtils getInstance(Context _context) {
-        if (INSTANCE == null) {
-            INSTANCE = new PrefUtils(_context);
-        }
-        return INSTANCE;
+    public static String getPreferredLocation(Context _context) {
+        final SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(_context);
+        return pref.getString(
+                _context.getString(R.string.pref_location_key),
+                _context.getString(R.string.pref_location_default));
     }
 
-    public String getPreferredLocation() {
-        return sPreferences.getString(KEY_LOCATION, null);
+    public static long getSyncInterval(Context _context) {
+        final SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(_context);
+        return Long.valueOf(pref.getString(
+                _context.getString(R.string.pref_sync_interval_key),
+                _context.getString(R.string.pref_sync_interval_default)));
+    }
+
+    public static boolean isAutosyncEnabled(Context _context) {
+        final SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(_context);
+        return pref.getBoolean(
+                _context.getString(R.string.pref_sync_auto_key),
+                Boolean.valueOf(_context.getString(R.string.pref_sync_auto_default)));
+    }
+
+    public static boolean isWifiOnly(Context _context) {
+        final SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(_context);
+        return pref.getBoolean(
+                _context.getString(R.string.pref_sync_wifi_only_key),
+                Boolean.valueOf(_context.getString(R.string.pref_sync_wifi_only_default)));
+    }
+
+    public static boolean isSyncOnStartEnabled(Context _context) {
+        final SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(_context);
+        return pref.getBoolean(
+                _context.getString(R.string.pref_sync_update_on_start_key),
+                Boolean.valueOf(_context.getString(R.string.pref_sync_update_on_start_default)));
+    }
+
+    public static boolean isBackPressTwiceEnabled(Context _context) {
+        final SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(_context);
+        return pref.getBoolean(
+                _context.getString(R.string.pref_ask_on_exit_key),
+                Boolean.valueOf(_context.getString(R.string.pref_ask_on_exit_default)));
     }
 }

@@ -6,14 +6,45 @@
     <string name="pref_sync_update_on_start_key" translatable="false">pref_sync_update_on_start_key</string>
     <string name="pref_ask_on_exit_key" translatable="false">pref_ask_on_exit_key</string>
     <string name="pref_location_key" translatable="false">pref_location_key</string>
+    <string name="pref_sync_auto_key" translatable="false">pref_sync_auto_key</string>
+    <string name="pref_sync_interval_key" translatable="false">pref_sync_interval_key</string>
 
     <!--Text-->
     <string name="pref_category_sync">Sync Weather</string>
     <string name="pref_sync_wifi_only_title">Wifi only</string>
     <string name="pref_sync_update_on_start_title">Sync on start</string>
+    <string name="pref_sync_auto_title">Auto sync</string>
+    <string name="pref_sync_interval_title">Sync interval</string>
 
     <string name="pref_category_general">General</string>
     <string name="pref_ask_on_exit_title">Ask on exit</string>
     <string name="pref_location_title">Location</string>
+
+
+    <!--Default-->
+
+
+    <string name="pref_location_default" translatable="false">""</string>
+    <string name="pref_sync_wifi_only_default" translatable="false">true</string>
+    <string name="pref_sync_update_on_start_default" translatable="false">true</string>
+    <string name="pref_sync_auto_default" translatable="false">false</string>
+    <string name="pref_sync_interval_default" translatable="false">3600000</string>
+    <string name="pref_ask_on_exit_default" translatable="false">true</string>
+
+    <!--Values-->
+
+    <string-array name="pref_sync_interval_entries">
+        <item>1 day</item>
+        <item>3 hour</item>
+        <item>1 hour</item>
+        <item>30 min</item>
+    </string-array>
+
+    <string-array name="pref_sync_interval_values">
+        <item>86400000</item>
+        <item>10800000</item>
+        <item>3600000</item>
+        <item>1800000</item>
+    </string-array>
 
 </resources>

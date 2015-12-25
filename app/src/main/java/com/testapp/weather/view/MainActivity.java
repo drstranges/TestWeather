@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -17,16 +18,25 @@ import android.widget.Toast;
 import com.testapp.weather.R;
 import com.testapp.weather.databinding.ActivityMainBinding;
 import com.testapp.weather.util.KeyboardUtils;
+import com.testapp.weather.util.LogHelper;
+import com.testapp.weather.util.PrefUtils;
 import com.testapp.weather.view.fragment.SettingsFragment;
 import com.testapp.weather.view.fragment.TodayFragment;
 import com.testapp.weather.view.fragment.WeekFragment;
+import com.testapp.weather.viewmodel.MainViewModel;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+import java.util.Arrays;
 
-    private static final long BACK_PRESS_EXIT_DELAY = 3000; //3 sec
+public class MainActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener, MainViewModel.Callback {
+
+    private static final java.lang.String LOG_TAG = LogHelper.makeLogTag(MainActivity.class);
+
+    private static final long BACK_PRESS_EXIT_DELAY = 10000; //10 sec
     private ActivityMainBinding mBinding;
     private ActionBarDrawerToggle mDrawerToggle;
     private long mTimeLastBackPress;
+    private MainViewModel mViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +47,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (savedInstanceState == null) {
             selectDrawerItem(R.id.menu_item_weather_today);
         }
+
+        mViewModel = new MainViewModel(this, this);
+        mViewModel.performSync();
     }
 
     private void initNavigationDrawer() {
@@ -92,16 +105,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onBackPressed() {
         if (closeOpenedDrawer() || !checkExitByBackPressed()) return;
-            super.onBackPressed();
+        super.onBackPressed();
     }
 
     private boolean checkExitByBackPressed() {
-        final long timeNow = System.currentTimeMillis();
-        final long backPressDelay = timeNow - mTimeLastBackPress;
-        mTimeLastBackPress = timeNow;
-        final boolean isAllowed = backPressDelay > BACK_PRESS_EXIT_DELAY;
-        if (!isAllowed) {
-            Toast.makeText(getApplicationContext(), R.string.press_back_twice, Toast.LENGTH_SHORT).show();
+        boolean isAllowed = true;
+        if (PrefUtils.isBackPressTwiceEnabled(getApplicationContext())) {
+            final long timeNow = System.currentTimeMillis();
+            final long backPressDelay = timeNow - mTimeLastBackPress;
+            mTimeLastBackPress = timeNow;
+            isAllowed = backPressDelay < BACK_PRESS_EXIT_DELAY;
+            if (!isAllowed) {
+                Toast.makeText(getApplicationContext(), R.string.press_back_twice, Toast.LENGTH_SHORT).show();
+            }
         }
         return isAllowed;
     }
@@ -129,6 +145,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onDestroy() {
         mBinding.unbind();
+        mViewModel.onDestroy();
         super.onDestroy();
     }
 
@@ -141,5 +158,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .beginTransaction()
                 .replace(R.id.fragmentContainer, _fragment)
                 .commit();
+    }
+
+    @Override
+    public void requestPermissions(int _requestCode, String[] _requiredPermissions) {
+        LogHelper.LOGD(LOG_TAG, "Permissions requested: " + Arrays.toString(_requiredPermissions));
+        ActivityCompat.requestPermissions(this, _requiredPermissions, _requestCode);
+    }
+
+    @Override
+    public void onError(Exception _e) {
+        Toast.makeText(getApplicationContext(), _e.getMessage(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] _permissions, int[] _grantResults) {
+        LogHelper.LOGD(LOG_TAG, "onRequestPermissionsResult. permissions: " + Arrays.toString(_permissions) +
+                "grantResults: " + Arrays.toString(_grantResults));
+        if (!mViewModel.onRequestPermissionResult(requestCode, _permissions, _grantResults)) {
+            super.onRequestPermissionsResult(requestCode, _permissions, _grantResults);
+        }
     }
 }

@@ -18,6 +18,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
         addPreferencesFromResource(R.xml.pref_general);
 
         bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_location_key)));
+        bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_sync_interval_key)));
+        bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_location_key)));
     }
 
     private void bindPreferenceSummaryToValue(Preference preference) {

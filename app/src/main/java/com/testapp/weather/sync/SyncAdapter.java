@@ -13,6 +13,7 @@ import com.testapp.weather.db.ForecastManager;
 import com.testapp.weather.model.ForecastItem;
 import com.testapp.weather.sync.util.OpenWeatherContract;
 import com.testapp.weather.util.LogHelper;
+import com.testapp.weather.util.NetworkUtils;
 import com.testapp.weather.util.PrefUtils;
 
 import org.json.JSONObject;
@@ -46,7 +47,10 @@ public final class SyncAdapter extends AbstractThreadedSyncAdapter {
     @Override
     public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) {
         final Context context = getContext();
-        final String location = PrefUtils.getInstance(context).getPreferredLocation();
+
+        if (PrefUtils.isWifiOnly(context) && !NetworkUtils.isWifiConnected(context)) return;
+
+        final String location = PrefUtils.getPreferredLocation(context);
         if (TextUtils.isEmpty(location)) {
             LogHelper.LOGD(LOG_TAG, "Error: Location not found");
             SyncStatusReceiver.sendSyncError(context, 0, context.getString(R.string.error_location_not_found));
@@ -59,7 +63,7 @@ public final class SyncAdapter extends AbstractThreadedSyncAdapter {
             String results = downloadData(url);
             final JSONObject jsonResponse = new JSONObject(results);
             List<ForecastItem> forecast = ForecastItem.from(jsonResponse);
-            ForecastManager.updateForecast(context, forecast);
+            ForecastManager.addForecast(context, forecast);
             SyncStatusReceiver.sendSyncFinishedSuccessfull(context);
         } catch (Exception e) {
             LogHelper.LOGD(LOG_TAG, "Sync failed", e);
