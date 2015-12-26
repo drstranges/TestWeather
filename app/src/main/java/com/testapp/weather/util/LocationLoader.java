@@ -8,7 +8,11 @@ import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
+
+import com.testapp.weather.R;
+import com.testapp.weather.sync.StatusReceiver;
 
 import java.io.IOException;
 import java.util.List;
@@ -42,10 +46,12 @@ public class LocationLoader extends AsyncTaskLoader<String> {
             }
         } catch (PermissionHelper.PermissionSecurityException _e) {
             _e.printStackTrace();
+            StatusReceiver.sendSyncError(getContext(), 0, getContext().getString(R.string.error_location_not_found));
         }
         return locationAddress;
     }
 
+    @Nullable
     private Location getLocation() {
         LocationManager locationManager =
                 (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
@@ -54,9 +60,8 @@ public class LocationLoader extends AsyncTaskLoader<String> {
         criteria.setAccuracy(Criteria.ACCURACY_COARSE);
 
         String provider = locationManager.getBestProvider(criteria, true);
-
         //noinspection ResourceType
-        return locationManager.getLastKnownLocation(provider);
+        return provider == null ? null : locationManager.getLastKnownLocation(provider);
     }
 
     private String getAddress(Location _location) {

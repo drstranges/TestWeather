@@ -11,9 +11,9 @@ import com.testapp.weather.util.LogHelper;
 /**
  * Created on 24.12.2015.
  */
-public class SyncStatusReceiver extends BroadcastReceiver {
+public class StatusReceiver extends BroadcastReceiver {
 
-    private static final java.lang.String LOG_TAG = LogHelper.makeLogTag(SyncStatusReceiver.class);
+    private static final java.lang.String LOG_TAG = LogHelper.makeLogTag(StatusReceiver.class);
 
     private static final String ACTION_SYNC_STARTED = "com.testapp.weather.ACTION_SYNC_STARTED";
     private static final String ACTION_SYNC_FINISHED = "com.testapp.weather.ACTION_SYNC_FINISHED";
@@ -40,7 +40,7 @@ public class SyncStatusReceiver extends BroadcastReceiver {
         return intentFilter;
     }
 
-    public SyncStatusReceiver(SyncStatusListener _listener) {
+    public StatusReceiver(SyncStatusListener _listener) {
         mStatusListener = _listener;
     }
 

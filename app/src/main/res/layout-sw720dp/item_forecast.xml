@@ -31,16 +31,40 @@
         tools:background="@color/colorWeatherClear"
         >
 
-        <com.testapp.weather.view.widget.SquareImageView
-            android:id="@+id/ivIcon"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_gravity="center_vertical|left"
-            android:padding="8dp"
-            android:scaleType="fitCenter"
-            android:setImageResource="@{ForecastUtils.getWeatherCondition(forecast.weatherId).getIconResId}"
-            tools:src="@drawable/ic_weather_clear"
-            />
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:background="#2A000000"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+
+            <com.testapp.weather.view.widget.SquareImageView
+                android:id="@+id/ivIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical|left"
+                android:scaleType="fitCenter"
+                android:setImageResource="@{ForecastUtils.getWeatherCondition(forecast.weatherId).getIconResId}"
+                tools:src="@drawable/ic_weather_clear"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:padding="8dp"
+                android:textColor="@android:color/white"
+                android:text='@{@string/format_temp_short(forecast.maxTemp)}'
+                android:gravity="center"
+                android:textSize="18dp"
+                android:ems="4"
+                tools:text="@string/format_temp_short"/>
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

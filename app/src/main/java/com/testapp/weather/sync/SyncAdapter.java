@@ -12,6 +12,7 @@ import com.testapp.weather.R;
 import com.testapp.weather.db.ForecastManager;
 import com.testapp.weather.model.ForecastItem;
 import com.testapp.weather.sync.util.OpenWeatherContract;
+import com.testapp.weather.sync.util.ParseUtils;
 import com.testapp.weather.util.LogHelper;
 import com.testapp.weather.util.NetworkUtils;
 import com.testapp.weather.util.PrefUtils;
@@ -53,23 +54,23 @@ public final class SyncAdapter extends AbstractThreadedSyncAdapter {
         final String location = PrefUtils.getPreferredLocation(context);
         if (TextUtils.isEmpty(location)) {
             LogHelper.LOGD(LOG_TAG, "Error: Location not found");
-            SyncStatusReceiver.sendSyncError(context, 0, context.getString(R.string.error_location_not_found));
+            StatusReceiver.sendSyncError(context, 0, context.getString(R.string.error_location_not_found));
             return;
         }
         final String url = OpenWeatherContract.getDailyForecastUrl(location, NUM_DAYS_SYNC);
         LogHelper.LOGD(LOG_TAG, "onPerformSync.url = " + url);
-        SyncStatusReceiver.sendSyncStarted(context);
+        StatusReceiver.sendSyncStarted(context);
         try {
             String results = downloadData(url);
             final JSONObject jsonResponse = new JSONObject(results);
-            List<ForecastItem> forecast = ForecastItem.from(jsonResponse);
+            List<ForecastItem> forecast = ParseUtils.parseForecast(jsonResponse);
             ForecastManager.addForecast(context, forecast);
-            SyncStatusReceiver.sendSyncFinishedSuccessfull(context);
+            StatusReceiver.sendSyncFinishedSuccessfull(context);
         } catch (Exception e) {
             LogHelper.LOGD(LOG_TAG, "Sync failed", e);
             final int errorCode = getErrorCode(e);
             final String message = e.getMessage();
-            SyncStatusReceiver.sendSyncError(context, errorCode, message);
+            StatusReceiver.sendSyncError(context, errorCode, message);
         }
 
     }

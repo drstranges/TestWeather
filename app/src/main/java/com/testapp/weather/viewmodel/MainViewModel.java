@@ -15,7 +15,7 @@ import com.testapp.weather.util.PrefUtils;
  * Created on 25.12.2015.
  */
 public class MainViewModel implements ViewModel, SharedPreferences.OnSharedPreferenceChangeListener {
-    private static final int REQUEST_CODE_PERMISSIONS = 1001;
+    private static final int REQUEST_CODE_PERMISSIONS = 1;
 
     private Context mContext;
     private Callback mCallback;

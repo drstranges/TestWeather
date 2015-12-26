@@ -31,7 +31,16 @@ public class SquareImageView extends ImageView {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        final int size = Math.min(getMeasuredWidth(), getMeasuredHeight());
+        final int widthSpecMode = MeasureSpec.getMode(widthMeasureSpec);
+        final int heightSpecMode = MeasureSpec.getMode(heightMeasureSpec);
+        final int size;
+        if (widthSpecMode == MeasureSpec.AT_MOST && heightSpecMode != MeasureSpec.AT_MOST){
+            size = getMeasuredHeight();
+        } else if (widthSpecMode != MeasureSpec.AT_MOST && heightSpecMode == MeasureSpec.AT_MOST){
+            size = getMeasuredWidth();
+        } else {
+            size = Math.min(getMeasuredWidth(), getMeasuredHeight());
+        }
         setMeasuredDimension(size, size);
     }
 }

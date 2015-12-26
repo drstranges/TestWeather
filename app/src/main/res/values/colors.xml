@@ -14,4 +14,14 @@
     <color name="colorDrawerItemActivated">@color/colorAccent</color>
     <color name="colorDrawerBackground">@color/colorPrimaryDark</color>
 
+    <color name="colorWeatherStorm">#5D4037</color>
+    <color name="colorWeatherDrizzle">#00ACC1</color>
+    <color name="colorWeatherPouring">#00ACC1</color>
+    <color name="colorWeatherSnowy">#1E88E5</color>
+    <color name="colorWeatherHail">#1976D2</color>
+    <color name="colorWeatherClear">#FFB300</color>
+    <color name="colorWeatherCloudy">#039BE5</color>
+    <color name="colorWeatherFog">#455A64</color>
+    <color name="colorWeatherWindy">#D32F2F</color>
+
 </resources>
