@@ -1,12 +1,15 @@
 package com.testapp.weather.view.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 
 import com.testapp.weather.R;
+import com.testapp.weather.view.ColorToolbarHolder;
 
 /**
  * Created on 23.12.2015.
@@ -44,5 +47,18 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
             preference.setSummary(stringValue);
         }
         return true;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setToolbarColor(getResources().getColor(R.color.colorPrimaryDark));
+    }
+
+    protected void setToolbarColor(int _color) {
+        Activity activity = getActivity();
+        if (activity instanceof ColorToolbarHolder) {
+            ((ColorToolbarHolder) activity).setToolbarColor(_color);
+        }
     }
 }

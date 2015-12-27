@@ -1,14 +1,19 @@
 package com.testapp.weather.view.fragment;
 
+import android.app.Activity;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.testapp.weather.databinding.FragmentDayBinding;
+import com.testapp.weather.view.ColorToolbarHolder;
 import com.testapp.weather.viewmodel.DayViewModel;
 
 import java.util.Date;
@@ -24,10 +29,16 @@ public class DayFragment extends Fragment implements DayViewModel.Callback {
 
     public static DayFragment newInstance(long _timeMillis) {
         DayFragment fragment = new DayFragment();
-        final Bundle args = new Bundle();
-        args.putLong(ARG_TIME, _timeMillis);
+        final Bundle args = buildArgs(_timeMillis);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @NonNull
+    public static Bundle buildArgs(long _timeMillis) {
+        final Bundle args = new Bundle();
+        args.putLong(ARG_TIME, _timeMillis);
+        return args;
     }
 
     private long getArgTimeMillis() {
@@ -52,6 +63,23 @@ public class DayFragment extends Fragment implements DayViewModel.Callback {
     @Override
     public void onError(Exception _e) {
 
+    }
+
+    @Override
+    public void setTitle(String _title) {
+        getActivity().setTitle(_title);
+    }
+
+    @Override
+    public void setBgColor(int _color) {
+        setToolbarColor(_color);
+    }
+
+    protected void setToolbarColor(int _color) {
+        Activity activity = getActivity();
+        if (activity instanceof ColorToolbarHolder) {
+            ((ColorToolbarHolder) activity).setToolbarColor(_color);
+        }
     }
 
     @Override

@@ -33,6 +33,10 @@ public class DayViewModel implements ViewModel, LoaderManager.LoaderCallbacks<Cu
 
     public interface Callback {
         void onError(Exception _e);
+
+        void setTitle(String _title);
+
+        void setBgColor(int _color);
     }
 
     public DayViewModel(Context _context, long _timeMillis, LoaderManager _loaderManager, Callback _callback) {
@@ -68,12 +72,19 @@ public class DayViewModel implements ViewModel, LoaderManager.LoaderCallbacks<Cu
     }
 
     @Override
-    public void onLoaderReset(Loader<Cursor> _loader) {
-        refreshStatus();
-    }
+    public void onLoaderReset(Loader<Cursor> _loader) {}
 
     private void refreshStatus() {
-        isEmptyMessageVisible.set(forecast.get() == null);
+        final ForecastItem forecastItem = forecast.get();
+        final boolean hasForecast = forecastItem != null;
+        isEmptyMessageVisible.set(!hasForecast);
+        if (hasForecast) {
+            mCallback.setTitle(
+                    ForecastUtils.getRelativeDate(mContext, forecastItem.dateTime).toString());
+            mCallback.setBgColor(
+                    mContext.getResources().getColor(
+                            ForecastUtils.getWeatherCondition(forecastItem.weatherId).getColorResId()));
+        }
     }
 
 
@@ -81,7 +92,14 @@ public class DayViewModel implements ViewModel, LoaderManager.LoaderCallbacks<Cu
 
         @Override
         public void onError(Exception _e) {
+        }
 
+        @Override
+        public void setTitle(String _title) {
+        }
+
+        @Override
+        public void setBgColor(int _color) {
         }
     }
 }

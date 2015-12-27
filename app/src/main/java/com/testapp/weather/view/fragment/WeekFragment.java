@@ -1,5 +1,6 @@
 package com.testapp.weather.view.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -7,8 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.testapp.weather.R;
 import com.testapp.weather.databinding.FragmentWeekBinding;
 import com.testapp.weather.model.ForecastItem;
+import com.testapp.weather.view.ColorToolbarHolder;
+import com.testapp.weather.view.Navigator;
 import com.testapp.weather.viewmodel.WeekViewModel;
 
 /**
@@ -28,13 +32,30 @@ public class WeekFragment extends Fragment implements WeekViewModel.Callback {
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setToolbarColor(getResources().getColor(R.color.colorPrimaryDark));
+    }
+
+    protected void setToolbarColor(int _color) {
+        Activity activity = getActivity();
+        if (activity instanceof ColorToolbarHolder) {
+            ((ColorToolbarHolder) activity).setToolbarColor(_color);
+        }
+    }
+
+    @Override
     public void onError(Exception _e) {
 
     }
 
     @Override
     public void onForecastClicked(View _view, ForecastItem _forecast) {
-
+        final Activity activity = getActivity();
+        if (activity instanceof Navigator){
+            ((Navigator) activity)
+                    .navigateToScreen(DayFragment.class, DayFragment.buildArgs(_forecast.dateTime), true);
+        }
     }
 
     @Override

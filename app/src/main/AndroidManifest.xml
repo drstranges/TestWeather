@@ -23,6 +23,11 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".view.ChildActivity"
+            android:label="@string/app_name">
+        </activity>
+
         <service
             android:name=".sync.SyncService"
             android:exported="true"

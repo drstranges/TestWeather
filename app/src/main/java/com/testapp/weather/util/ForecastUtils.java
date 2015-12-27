@@ -124,14 +124,14 @@ public class ForecastUtils {
         return relativeDate;
     }
 
-    public static String getMaxMinTemp(Context _context, double _maxTemp, double _minTemp) {
+    public static SpannableStringBuilder getMaxMinTemp(Context _context, double _maxTemp, double _minTemp) {
         String maxTemp = _context.getString(R.string.format_temp_short, _maxTemp);
         String minTemp = _context.getString(R.string.format_temp_short, _minTemp);
 
         final SpannableStringBuilder sb = new SpannableStringBuilder();
         sb.append(maxTemp).setSpan(new RelativeSizeSpan(2f), 0, maxTemp.length(),0);
         sb.append(minTemp);
-        return sb.toString();
+        return sb;
     }
 
 //    public static long getNormalizedDate(long _timeMillis) {
