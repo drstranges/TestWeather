@@ -33,4 +33,26 @@
         <item name="theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
     </style>
 
+    <style name="ToolbarStyle.Transparent">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="DayFragmentTitleStyle">
+        <item name="android:layout_gravity">left</item>
+    </style>
+
+    <style name="divider_vertical">
+        <item name="android:layout_width">@dimen/divide_size</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/colorDivider</item>
+    </style>
+
+    <style name="divider_horizontal">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/divide_size</item>
+        <item name="android:background">@color/colorDivider</item>
+        <item name="android:layout_marginLeft">@dimen/divider_horizontal_margin</item>
+        <item name="android:layout_marginRight">@dimen/divider_horizontal_margin</item>
+    </style>
+
 </resources>

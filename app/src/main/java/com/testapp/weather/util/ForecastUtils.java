@@ -3,11 +3,14 @@ package com.testapp.weather.util;
 import android.content.Context;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
+import android.text.SpannableStringBuilder;
 import android.text.format.DateUtils;
+import android.text.style.RelativeSizeSpan;
 
 import com.testapp.weather.R;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -19,6 +22,7 @@ import java.util.Locale;
 public class ForecastUtils {
     public static final DateFormat DATE_FORMAT = new SimpleDateFormat("cccc, d MMMM", Locale.getDefault());
     public static final DateFormat DATE_FORMAT_SHORT = new SimpleDateFormat("cc, d MMMM", Locale.getDefault());
+//    public static final DateFormat MIDNIGHT_CONVERTER = new SimpleDateFormat("yyyyMMdd");
     public static final int MILLIS_IN_DAY = 24 * 60 * 60 * 1000;
 
     public enum WeatherCondition {
@@ -119,4 +123,24 @@ public class ForecastUtils {
         }
         return relativeDate;
     }
+
+    public static String getMaxMinTemp(Context _context, double _maxTemp, double _minTemp) {
+        String maxTemp = _context.getString(R.string.format_temp_short, _maxTemp);
+        String minTemp = _context.getString(R.string.format_temp_short, _minTemp);
+
+        final SpannableStringBuilder sb = new SpannableStringBuilder();
+        sb.append(maxTemp).setSpan(new RelativeSizeSpan(2f), 0, maxTemp.length(),0);
+        sb.append(minTemp);
+        return sb.toString();
+    }
+
+//    public static long getNormalizedDate(long _timeMillis) {
+//        Date midnight = new Date(_timeMillis);
+//        try {
+//            midnight = MIDNIGHT_CONVERTER.parse(MIDNIGHT_CONVERTER.format(midnight));
+//        } catch (ParseException _e) {
+//            _e.printStackTrace();
+//        }
+//        return midnight.getTime();
+//    }
 }

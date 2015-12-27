@@ -82,7 +82,7 @@ public class WeekViewModel implements ViewModel, OnActionClickListener, LoaderMa
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String sortOrder = ForecastTable.FIELD_DATE_TIME + " ASC";
-        final Uri uri = ForecastTable.buildUriWithStartDate(System.currentTimeMillis(), 0, FORECAST_DAY_COUNT);
+        final Uri uri = ForecastTable.buildUriWithStartDate(new Date(), 0, FORECAST_DAY_COUNT);
         return new CursorLoader(mContext,
                 uri,
                 null,

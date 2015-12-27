@@ -105,6 +105,11 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         return mForecastTable;
     }
 
+    public <T> T convertFromCursor(Cursor _cursor, Class<T> _class, boolean _shouldCloseCursor) {
+        List<T> list = convertCursorToList(_cursor, _class, _shouldCloseCursor);
+        return list.isEmpty() ? null : list.get(0);
+    }
+
     public <T> List<T> convertCursorToList(Cursor _cursor, Class<T> _class, boolean _shouldCloseCursor) {
         try {
             if (ForecastItem.class.equals(_class)) {

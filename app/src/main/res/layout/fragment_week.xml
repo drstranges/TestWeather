@@ -30,8 +30,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:indeterminate="true"
-            android:visibility="gone"
             android:setVisibility="@{viewModel.isProgressVisible}"
+            android:visibility="gone"
             />
 
         <TextView
@@ -39,10 +39,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
+            android:setVisibility="@{viewModel.isEmptyMessageVisible}"
             android:text="@string/message_list_empty"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:visibility="gone"
-            android:setVisibility="@{viewModel.isEmptyMessageVisible}"/>
+            android:textColor="@android:color/white"
+            android:visibility="gone"/>
 
     </FrameLayout>
 </layout>

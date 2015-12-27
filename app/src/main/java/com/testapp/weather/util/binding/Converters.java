@@ -1,5 +1,6 @@
 package com.testapp.weather.util.binding;
 
+import android.content.Context;
 import android.databinding.BindingAdapter;
 import android.databinding.BindingConversion;
 import android.graphics.drawable.ColorDrawable;
@@ -7,11 +8,15 @@ import android.support.annotation.ColorRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
 import android.text.format.DateUtils;
+import android.text.style.RelativeSizeSpan;
 import android.util.TimeUtils;
 import android.view.View;
 import android.widget.TextView;
 
+import com.testapp.weather.R;
 import com.testapp.weather.adapter.util.ListConfig;
 import com.testapp.weather.model.Model;
 import com.testapp.weather.util.ForecastUtils;
@@ -63,6 +68,12 @@ public class Converters {
     @BindingAdapter({"backgroundColorResId"})
     public static void setBackgroundColorResId(final View _view, final @ColorRes int _colorResId) {
         _view.setBackgroundColor(ContextCompat.getColor(_view.getContext(), _colorResId));
+    }
+
+    @BindingAdapter({"maxTemp", "minTemp"})
+    public static void setBackgroundColorResId(final TextView _view, final double _maxTemp, final double _minTemp) {
+        final String formattedTemp = ForecastUtils.getMaxMinTemp(_view.getContext(), _maxTemp, _minTemp);
+        _view.setText(formattedTemp);
     }
 
 }

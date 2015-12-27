@@ -11,8 +11,11 @@ import android.text.TextUtils;
 import com.testapp.weather.db.util.DbUtils;
 import com.testapp.weather.model.ForecastItem;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class ForecastTable extends SQLBaseTable<ForecastItem> {
 
@@ -39,9 +42,12 @@ public class ForecastTable extends SQLBaseTable<ForecastItem> {
     public static final String FIELD_MAX_TEMP = "maxTemp";
     public static final String FIELD_MIN_TEMP = "minTemp";
 
+    //not change DATE_FORMAT
+    public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+
     protected static final String SCRIPT_CREATE_TABLE = "create table " + TABLE_NAME + " ( " +
             FIELD_ID + " integer primary key, " +
-            FIELD_DATE_TIME + " integer not null, " +
+            FIELD_DATE_TIME + " text not null, " +
             FIELD_WEATHER_ID + " integer, " +
             FIELD_SHORT_DESCRIPTION + " text, " +
             FIELD_DESCRIPTION + " text, " +
@@ -71,39 +77,36 @@ public class ForecastTable extends SQLBaseTable<ForecastItem> {
                 .build();
     }
 
-    public static Uri buildUriWithStartDate(long _startUtcDate, long _offset, long _limit) {
-        long startDate = getDateForMidnight(_startUtcDate);
+    public static Uri buildUriWithStartDate(Date _startDate, long _offset, long _limit) {
+//        long startDate = getDateForMidnight(_startDate);
         return CONTENT_URI.buildUpon()
-                .appendQueryParameter(URI_PARAM_START_DATE, Long.toString(startDate))
+                .appendQueryParameter(URI_PARAM_START_DATE, dateToDatabaseFormat(_startDate))
                 .appendQueryParameter(URI_PARAM_QUERY_OFFSET, String.valueOf(_offset))
                 .appendQueryParameter(URI_PARAM_QUERY_LIMIT, String.valueOf(_limit))
                 .build();
     }
 
-    private static long getDateForMidnight(long _millis) {
-        Calendar date = Calendar.getInstance();
-        date.setTimeInMillis(_millis);
-        date.set(Calendar.HOUR_OF_DAY, 0);
-        date.set(Calendar.MINUTE, 0);
-        date.set(Calendar.SECOND, 0);
-        date.set(Calendar.MILLISECOND, 0);
-        return date.getTimeInMillis();
+//    private static long getDateForMidnight(long _millis) {
+//        Calendar date = Calendar.getInstance();
+//        date.setTimeInMillis(_millis);
+//        date.set(Calendar.HOUR_OF_DAY, 0);
+//        date.set(Calendar.MINUTE, 0);
+//        date.set(Calendar.SECOND, 0);
+//        date.set(Calendar.MILLISECOND, 0);
+//        return date.getTimeInMillis();
+//    }
+
+    public static Uri buildUriWithDate(Date _date) {
+        //        long startDate = getDateForMidnight(_date);
+        return CONTENT_URI.buildUpon().appendPath(dateToDatabaseFormat(_date)).build();
     }
 
-    public static Uri buildUriWithDate(long utcDate) {
-        return CONTENT_URI.buildUpon().appendPath(Long.toString(utcDate)).build();
+    public static String getStartDateFromUri(Uri uri) {
+        return uri.getQueryParameter(URI_PARAM_START_DATE);
     }
 
-    public static long getStartDateFromUri(Uri uri) {
-        String dateString = uri.getQueryParameter(URI_PARAM_START_DATE);
-        if (!TextUtils.isEmpty(dateString)) {
-            return Long.parseLong(dateString);
-        }
-        return 0;
-    }
-
-    public static long getDateFromUri(Uri uri) {
-        return Long.parseLong(uri.getPathSegments().get(1));
+    public static String getDateFromUri(Uri uri) {
+        return uri.getPathSegments().get(1);
     }
 
     @Override
@@ -114,7 +117,11 @@ public class ForecastTable extends SQLBaseTable<ForecastItem> {
     @Override
     protected ForecastItem loadDbItem(final Cursor _cur) {
         final ForecastItem item = new ForecastItem();
-        item.dateTime = _cur.getLong(_cur.getColumnIndex(FIELD_DATE_TIME));
+        try {
+            item.dateTime = dateFromDatabaseFormat(_cur.getString(_cur.getColumnIndex(FIELD_DATE_TIME))).getTime();
+        } catch (ParseException _e) {
+            _e.printStackTrace();
+        }
         item.weatherId = _cur.getInt(_cur.getColumnIndex(FIELD_WEATHER_ID));
         item.shortDescription = _cur.getString(_cur.getColumnIndex(FIELD_SHORT_DESCRIPTION));
         item.description = _cur.getString(_cur.getColumnIndex(FIELD_DESCRIPTION));
@@ -135,7 +142,7 @@ public class ForecastTable extends SQLBaseTable<ForecastItem> {
         if (item.id != null) {
             cv.put(FIELD_ID, item.id);
         }
-        cv.put(FIELD_DATE_TIME, item.dateTime);
+        cv.put(FIELD_DATE_TIME, dateToDatabaseFormat(new Date(item.dateTime)));
         cv.put(FIELD_WEATHER_ID, item.weatherId);
         cv.put(FIELD_SHORT_DESCRIPTION, item.shortDescription);
         cv.put(FIELD_DESCRIPTION, item.description);
@@ -147,6 +154,14 @@ public class ForecastTable extends SQLBaseTable<ForecastItem> {
         cv.put(FIELD_MAX_TEMP, item.maxTemp);
         cv.put(FIELD_MIN_TEMP, item.minTemp);
         return cv;
+    }
+
+    public static String dateToDatabaseFormat(Date _date) {
+        return DATE_FORMAT.format(_date);
+    }
+
+    public static Date dateFromDatabaseFormat(String _date) throws ParseException {
+        return DATE_FORMAT.parse(_date);
     }
 
 }

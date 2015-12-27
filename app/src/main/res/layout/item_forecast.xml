@@ -33,17 +33,19 @@
 
         <ImageView
             android:id="@+id/ivIcon"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="match_parent"
             android:padding="4dp"
             android:scaleType="fitCenter"
-            android:adjustViewBounds="true"
+            android:adjustViewBounds="false"
             android:setImageResource="@{ForecastUtils.getWeatherCondition(forecast.weatherId).getIconResId}"
             tools:src="@drawable/ic_weather_clear"
             />
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="3"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:background="#2A000000"

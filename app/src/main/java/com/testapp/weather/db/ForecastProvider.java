@@ -24,7 +24,7 @@ public class ForecastProvider extends ContentProvider {
         final String authority = SQLBaseTable.CONTENT_AUTHORITY;
 
         matcher.addURI(authority, ForecastTable.TABLE_NAME, FORECAST);
-        matcher.addURI(authority, ForecastTable.TABLE_NAME + "/#", FORECAST_WITH_DATE);
+        matcher.addURI(authority, ForecastTable.TABLE_NAME + "/*", FORECAST_WITH_DATE);
 
         return matcher;
     }
@@ -35,8 +35,8 @@ public class ForecastProvider extends ContentProvider {
         return true;
     }
 
-    private static final String mForecastByDateSelection = ForecastTable.FIELD_DATE_TIME + " = ?";
-    private static final String mForecastByStartDateSelection = ForecastTable.FIELD_DATE_TIME + " >= ?";
+    private static final String mForecastByDateSelection = "DATETIME(" + ForecastTable.FIELD_DATE_TIME + ") == DATETIME(?)";
+    private static final String mForecastByStartDateSelection = "DATETIME(" + ForecastTable.FIELD_DATE_TIME + ") >= ?";
 
     private Cursor queryForecastTable(final Uri _uri, final String[] _projection, final String _selection,
                                       final String[] _selectionArgs, final String _sortOrder) {
@@ -50,10 +50,10 @@ public class ForecastProvider extends ContentProvider {
         String[] selectionArgs = _selectionArgs;
         String selection = _selection;
 
-        long startDate = ForecastTable.getStartDateFromUri(_uri);
-        if (startDate != 0) {
+        String startDate = ForecastTable.getStartDateFromUri(_uri);
+        if (!TextUtils.isEmpty(startDate)) {
             selection = mForecastByStartDateSelection;
-            selectionArgs = new String[]{String.valueOf(startDate)};
+            selectionArgs = new String[]{startDate};
         }
 
         return mOpenHelper.openForecastTable(false).getAll(
@@ -75,10 +75,10 @@ public class ForecastProvider extends ContentProvider {
             }
 
             case FORECAST_WITH_DATE: {
-                long date = ForecastTable.getDateFromUri(_uri);
+                String date = ForecastTable.getDateFromUri(_uri);
                 retCursor = queryForecastTable(_uri, _projection,
                         mForecastByDateSelection,
-                        new String[]{String.valueOf(date)},
+                        new String[]{date},
                         _sortOrder);
                 break;
             }
@@ -134,8 +134,8 @@ public class ForecastProvider extends ContentProvider {
                 rowsDeleted = mOpenHelper.openForecastTable(true).delete(_selection, _selectionArgs);
                 break;
             case FORECAST_WITH_DATE:
-                final long date = ForecastTable.getDateFromUri(_uri);
-                final String[] selectionArgs = new String[]{String.valueOf(date)};
+                final String date = ForecastTable.getDateFromUri(_uri);
+                final String[] selectionArgs = new String[]{date};
                 rowsDeleted = mOpenHelper.openForecastTable(true).delete(mForecastByDateSelection, selectionArgs);
                 break;
             default:
@@ -159,8 +159,8 @@ public class ForecastProvider extends ContentProvider {
                         .update(_values, _selection, _selectionArgs);
                 break;
             case FORECAST_WITH_DATE:
-                final long date = ForecastTable.getDateFromUri(_uri);
-                final String[] selectionArgs = new String[]{String.valueOf(date)};
+                final String date = ForecastTable.getDateFromUri(_uri);
+                final String[] selectionArgs = new String[]{date};
                 rowsUpdated = mOpenHelper.openForecastTable(true)
                         .update(_values, mForecastByDateSelection, selectionArgs);
                 break;

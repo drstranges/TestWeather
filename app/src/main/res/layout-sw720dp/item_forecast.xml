@@ -44,6 +44,7 @@
                 android:id="@+id/ivIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:maxWidth="60dp"
                 android:scaleType="fitCenter"
                 android:adjustViewBounds="true"
                 android:layout_marginLeft="8dp"
@@ -62,7 +63,7 @@
                 android:text='@{@string/format_temp_short(forecast.maxTemp)}'
                 android:gravity="center"
                 android:textSize="36sp"
-                android:ems="4"
+                android:ems="3"
                 tools:text="@string/format_temp_short"/>
 
         </LinearLayout>
