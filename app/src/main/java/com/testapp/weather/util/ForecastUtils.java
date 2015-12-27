@@ -9,13 +9,17 @@ import com.testapp.weather.R;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Helper class to provide resource id according to the weather condition
  * Created by d_rom on 25.12.2015.
  */
 public class ForecastUtils {
-    public static final DateFormat DATE_FORMAT = SimpleDateFormat.getDateInstance();
+    public static final DateFormat DATE_FORMAT = new SimpleDateFormat("cccc, d MMMM", Locale.getDefault());
+    public static final DateFormat DATE_FORMAT_SHORT = new SimpleDateFormat("cc, d MMMM", Locale.getDefault());
+    public static final int MILLIS_IN_DAY = 24 * 60 * 60 * 1000;
 
     public enum WeatherCondition {
         THUNDERSTORM(R.drawable.ic_weather_lightning, R.color.colorWeatherStorm),
@@ -40,6 +44,7 @@ public class ForecastUtils {
         public int getIconResId() {
             return mIconResId;
         }
+
         public int getColorResId() {
             return mColorResId;
         }
@@ -102,8 +107,16 @@ public class ForecastUtils {
     }
 
     public static CharSequence getRelativeDate(Context _context, long _timeMillis) {
-//        return DateUtils.getRelativeDateTimeString(_context, _timeMillis, DateUtils.HOUR_IN_MILLIS, DateUtils.WEEK_IN_MILLIS, DateUtils.FORMAT_SHOW_DATE);
-        long now = System.currentTimeMillis();
-        return DateUtils.getRelativeTimeSpanString(_timeMillis, now, DateUtils.DAY_IN_MILLIS);
+        final CharSequence relativeDate;
+        if (DateUtils.isToday(_timeMillis)) {
+            relativeDate = _context.getString(R.string.date_format_today,
+                    DATE_FORMAT_SHORT.format(new Date(_timeMillis)));
+        } else if (DateUtils.isToday(_timeMillis - MILLIS_IN_DAY)) {
+            relativeDate = _context.getString(R.string.relative_date_tomorrow,
+                    DATE_FORMAT_SHORT.format(new Date(_timeMillis)));
+        } else {
+            relativeDate = DATE_FORMAT.format(new Date(_timeMillis));
+        }
+        return relativeDate;
     }
 }
