@@ -22,7 +22,8 @@ public class WeekFragment extends Fragment implements WeekViewModel.Callback {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = FragmentWeekBinding.inflate(inflater, container, false);
-        mBinding.setViewModel(mViewModel = new WeekViewModel(getContext(), this));
+        mViewModel = new WeekViewModel(getContext(), getLoaderManager(), this);
+        mBinding.setViewModel(mViewModel);
         return mBinding.getRoot();
     }
 

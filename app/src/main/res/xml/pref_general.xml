@@ -1,14 +1,5 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="@string/pref_category_general">
-
-        <SwitchPreference
-            android:defaultValue="@string/pref_ask_on_exit_default"
-            android:key="@string/pref_ask_on_exit_key"
-            android:title="@string/pref_ask_on_exit_title"/>
-
-    </PreferenceCategory>
-
     <PreferenceCategory android:title="@string/pref_category_sync">
 
 
@@ -33,13 +24,23 @@
             android:title="@string/pref_sync_auto_title"/>
 
         <ListPreference
-            android:dependency="@string/pref_sync_auto_key"
-            android:title="@string/pref_sync_interval_title"
             android:defaultValue="@string/pref_sync_interval_default"
-            android:key="@string/pref_sync_interval_key"
+            android:dependency="@string/pref_sync_auto_key"
             android:entries="@array/pref_sync_interval_entries"
             android:entryValues="@array/pref_sync_interval_values"
+            android:key="@string/pref_sync_interval_key"
+            android:title="@string/pref_sync_interval_title"
             />
+
+    </PreferenceCategory>
+
+
+    <PreferenceCategory android:title="@string/pref_category_general">
+
+        <SwitchPreference
+            android:defaultValue="@string/pref_ask_on_exit_default"
+            android:key="@string/pref_ask_on_exit_key"
+            android:title="@string/pref_ask_on_exit_title"/>
 
     </PreferenceCategory>
 

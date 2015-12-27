@@ -25,18 +25,17 @@
         android:foreground="?attr/selectableItemBackground"
         android:onClick="@{onActionClickListener}"
         android:orientation="horizontal"
-        android:setBackgroundColor="@{ForecastUtils.getWeatherCondition(forecast.weatherId).getColorResId}"
+        app:backgroundColorResId="@{ForecastUtils.getWeatherCondition(forecast.weatherId).getColorResId}"
         app:action="@{ClickAction.SHOW_DETAIL}"
         app:model="@{forecast}"
         tools:background="@color/colorWeatherClear"
         >
 
-        <com.testapp.weather.view.widget.SquareImageView
+        <ImageView
             android:id="@+id/ivIcon"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_gravity="center_vertical|left"
-            android:padding="8dp"
+            android:padding="4dp"
             android:scaleType="fitCenter"
             android:setImageResource="@{ForecastUtils.getWeatherCondition(forecast.weatherId).getIconResId}"
             tools:src="@drawable/ic_weather_clear"

@@ -105,10 +105,11 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         return mForecastTable;
     }
 
-    public <T> List<T> convertCursorToList(Cursor _cursor, Class<? extends SQLBaseTable<T>> _table) {
+    public <T> List<T> convertCursorToList(Cursor _cursor, Class<T> _class, boolean _shouldCloseCursor) {
         try {
-            if (ForecastTable.class.equals(_table)) {
-                return (List<T>) mForecastTable.getList(_cursor);
+            if (ForecastItem.class.equals(_class)) {
+                //noinspection unchecked
+                return (List<T>) mForecastTable.getList(_cursor, _shouldCloseCursor);
             }// else if
         } catch (ClassCastException e) {
             LogHelper.LOGE(LOG_TAG, "convertCursorToList exception", e);

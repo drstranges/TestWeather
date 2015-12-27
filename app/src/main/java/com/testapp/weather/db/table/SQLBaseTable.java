@@ -114,7 +114,7 @@ public abstract class SQLBaseTable<T> {
                 null,                               // GROUP BY clause
                 null,
                 orderBy);                          // SQL ORDER BY clause
-        return getList(cur);
+        return getList(cur, true);
     }
 
     protected List<T> getList(final String selection, final String[] selectionArgs, final String orderBy) {
@@ -131,10 +131,10 @@ public abstract class SQLBaseTable<T> {
                 groupBy,                           // GROUP BY clause
                 null,
                 orderBy);                          // SQL ORDER BY clause
-        return getList(cur);
+        return getList(cur, true);
     }
 
-    public List<T> getList(final Cursor cur) {
+    public List<T> getList(final Cursor cur, final boolean shouldCloseCursor) {
         List<T> itemList = new ArrayList<>();
         if (DbUtils.checkCursor(cur)) {
             do {
@@ -142,7 +142,7 @@ public abstract class SQLBaseTable<T> {
                 itemList.add(item);
             }
             while (cur.moveToNext());
-            cur.close();
+            if (shouldCloseCursor) cur.close();
         }
         return itemList;
     }

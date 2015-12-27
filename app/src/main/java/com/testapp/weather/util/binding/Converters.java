@@ -3,6 +3,8 @@ package com.testapp.weather.util.binding;
 import android.databinding.BindingAdapter;
 import android.databinding.BindingConversion;
 import android.graphics.drawable.ColorDrawable;
+import android.support.annotation.ColorRes;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.format.DateUtils;
@@ -18,10 +20,10 @@ import com.testapp.weather.util.LogHelper;
 public class Converters {
     private static final String LOG_TAG = LogHelper.makeLogTag(Converters.class);
 
-    @BindingConversion
-    public static ColorDrawable convertColorToDrawable(int color) {
-        return new ColorDrawable(color);
-    }
+//    @BindingConversion
+//    public static ColorDrawable convertColorToDrawable(int color) {
+//        return new ColorDrawable(color);
+//    }
 
     @BindingConversion
     public static int convertBooleanToInt(boolean value) {
@@ -56,6 +58,11 @@ public class Converters {
     @BindingAdapter({"bind:textHtml"})
     public static void setHtmlText(final TextView _textView, final String _htmlText) {
         _textView.setText(Html.fromHtml(_htmlText));
+    }
+
+    @BindingAdapter({"backgroundColorResId"})
+    public static void setBackgroundColorResId(final View _view, final @ColorRes int _colorResId) {
+        _view.setBackgroundColor(ContextCompat.getColor(_view.getContext(), _colorResId));
     }
 
 }

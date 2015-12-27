@@ -1,15 +1,26 @@
 package com.testapp.weather.viewmodel;
 
+import android.app.Activity;
+import android.app.LoaderManager;
 import android.content.Context;
+import android.content.CursorLoader;
+import android.content.Loader;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
 import com.testapp.weather.R;
+import com.testapp.weather.db.table.ForecastTable;
+import com.testapp.weather.db.table.SQLBaseTable;
 import com.testapp.weather.sync.util.SyncManager;
 import com.testapp.weather.util.LocationLoader;
 import com.testapp.weather.util.PermissionHelper;
 import com.testapp.weather.util.PrefUtils;
+
+import java.util.Date;
 
 /**
  * Created on 25.12.2015.

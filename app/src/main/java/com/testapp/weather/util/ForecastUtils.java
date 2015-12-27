@@ -1,15 +1,14 @@
 package com.testapp.weather.util;
 
 import android.content.Context;
+import android.support.annotation.ColorRes;
+import android.support.annotation.DrawableRes;
 import android.text.format.DateUtils;
 
 import com.testapp.weather.R;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Helper class to provide resource id according to the weather condition
@@ -33,7 +32,7 @@ public class ForecastUtils {
         private final int mIconResId;
         private final int mColorResId;
 
-        WeatherCondition(int _iconResId, int _colorResId) {
+        WeatherCondition(@DrawableRes int _iconResId, @ColorRes int _colorResId) {
             mIconResId = _iconResId;
             mColorResId = _colorResId;
         }
@@ -41,13 +40,12 @@ public class ForecastUtils {
         public int getIconResId() {
             return mIconResId;
         }
-
         public int getColorResId() {
             return mColorResId;
         }
     }
 
-    //    http://openweathermap.org/weather-conditions
+    // See http://openweathermap.org/weather-conditions
     public static WeatherCondition getWeatherCondition(int _weatherId) {
 
         if (_weatherId >= 200 && _weatherId < 300) { //Thunderstorm
@@ -104,6 +102,8 @@ public class ForecastUtils {
     }
 
     public static CharSequence getRelativeDate(Context _context, long _timeMillis) {
-        return DateUtils.getRelativeDateTimeString(_context, _timeMillis, DateUtils.DAY_IN_MILLIS, DateUtils.WEEK_IN_MILLIS, 0);
+//        return DateUtils.getRelativeDateTimeString(_context, _timeMillis, DateUtils.HOUR_IN_MILLIS, DateUtils.WEEK_IN_MILLIS, DateUtils.FORMAT_SHOW_DATE);
+        long now = System.currentTimeMillis();
+        return DateUtils.getRelativeTimeSpanString(_timeMillis, now, DateUtils.DAY_IN_MILLIS);
     }
 }

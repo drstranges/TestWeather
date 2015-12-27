@@ -20,7 +20,7 @@ public class ItemDivider extends RecyclerView.ItemDecoration {
     private int mDividerFromPosition;
 
     public ItemDivider(Context _context, final int _dividerFromPosition) {
-        this(_context, _dividerFromPosition, HORIZONTAL);
+        this(_context, _dividerFromPosition, VERTICAL);
     }
 
     public ItemDivider(Context _context, final int _dividerFromPosition, int _orientation) {

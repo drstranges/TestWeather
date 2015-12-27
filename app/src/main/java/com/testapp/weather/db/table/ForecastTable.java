@@ -11,6 +11,9 @@ import android.text.TextUtils;
 import com.testapp.weather.db.util.DbUtils;
 import com.testapp.weather.model.ForecastItem;
 
+import java.util.Calendar;
+import java.util.Date;
+
 public class ForecastTable extends SQLBaseTable<ForecastItem> {
 
     public static final String TABLE_NAME = "forecast";
@@ -49,6 +52,8 @@ public class ForecastTable extends SQLBaseTable<ForecastItem> {
             FIELD_WIND_DIRECTION + " integer, " +
             FIELD_MAX_TEMP + " integer, " +
             FIELD_MIN_TEMP + " integer" +
+            ", UNIQUE(" + FIELD_DATE_TIME + ") ON CONFLICT REPLACE" +
+
             ");";
 
     public static void onCreateDb(SQLiteDatabase db) throws SQLException {
@@ -66,9 +71,23 @@ public class ForecastTable extends SQLBaseTable<ForecastItem> {
                 .build();
     }
 
-    public static Uri buildUriWithStartDate(long startUtcDate) {
+    public static Uri buildUriWithStartDate(long _startUtcDate, long _offset, long _limit) {
+        long startDate = getDateForMidnight(_startUtcDate);
         return CONTENT_URI.buildUpon()
-                .appendQueryParameter(URI_PARAM_START_DATE, Long.toString(startUtcDate)).build();
+                .appendQueryParameter(URI_PARAM_START_DATE, Long.toString(startDate))
+                .appendQueryParameter(URI_PARAM_QUERY_OFFSET, String.valueOf(_offset))
+                .appendQueryParameter(URI_PARAM_QUERY_LIMIT, String.valueOf(_limit))
+                .build();
+    }
+
+    private static long getDateForMidnight(long _millis) {
+        Calendar date = Calendar.getInstance();
+        date.setTimeInMillis(_millis);
+        date.set(Calendar.HOUR_OF_DAY, 0);
+        date.set(Calendar.MINUTE, 0);
+        date.set(Calendar.SECOND, 0);
+        date.set(Calendar.MILLISECOND, 0);
+        return date.getTimeInMillis();
     }
 
     public static Uri buildUriWithDate(long utcDate) {
@@ -96,6 +115,7 @@ public class ForecastTable extends SQLBaseTable<ForecastItem> {
     protected ForecastItem loadDbItem(final Cursor _cur) {
         final ForecastItem item = new ForecastItem();
         item.dateTime = _cur.getLong(_cur.getColumnIndex(FIELD_DATE_TIME));
+        item.weatherId = _cur.getInt(_cur.getColumnIndex(FIELD_WEATHER_ID));
         item.shortDescription = _cur.getString(_cur.getColumnIndex(FIELD_SHORT_DESCRIPTION));
         item.description = _cur.getString(_cur.getColumnIndex(FIELD_DESCRIPTION));
         item.iconName = _cur.getString(_cur.getColumnIndex(FIELD_ICON_NAME));
@@ -116,6 +136,7 @@ public class ForecastTable extends SQLBaseTable<ForecastItem> {
             cv.put(FIELD_ID, item.id);
         }
         cv.put(FIELD_DATE_TIME, item.dateTime);
+        cv.put(FIELD_WEATHER_ID, item.weatherId);
         cv.put(FIELD_SHORT_DESCRIPTION, item.shortDescription);
         cv.put(FIELD_DESCRIPTION, item.description);
         cv.put(FIELD_ICON_NAME, item.iconName);
