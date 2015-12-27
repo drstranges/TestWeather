@@ -65,7 +65,7 @@ public final class SyncAdapter extends AbstractThreadedSyncAdapter {
             final JSONObject jsonResponse = new JSONObject(results);
             List<ForecastItem> forecast = ParseUtils.parseForecast(jsonResponse);
             ForecastManager.addForecast(context, forecast);
-            StatusReceiver.sendSyncFinishedSuccessfull(context);
+            StatusReceiver.sendSyncFinished(context);
         } catch (Exception e) {
             LogHelper.LOGD(LOG_TAG, "Sync failed", e);
             final int errorCode = getErrorCode(e);

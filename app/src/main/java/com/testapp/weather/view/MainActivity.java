@@ -55,14 +55,7 @@ public class MainActivity extends AppCompatActivity
 
     private void initNavigationDrawer() {
         mDrawerToggle = new ActionBarDrawerToggle(this, mBinding.drawerLayout, mBinding.toolbar,
-                R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
-
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                KeyboardUtils.hideSoftKeyboard(MainActivity.this);
-            }
-        };
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mBinding.drawerLayout.setDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
         mBinding.navigationView.setNavigationItemSelectedListener(this);
@@ -170,6 +163,16 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onError(Exception _e) {
         Toast.makeText(getApplicationContext(), _e.getMessage(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSyncStarted() {
+        Toast.makeText(getApplicationContext(), "Syncing...", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSyncFinished() {
+        Toast.makeText(getApplicationContext(), "Weather syncing successfully!", Toast.LENGTH_SHORT).show();
     }
 
     @Override

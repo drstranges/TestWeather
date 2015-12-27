@@ -17,6 +17,7 @@ import com.testapp.weather.db.DatabaseHelper;
 import com.testapp.weather.db.table.ForecastTable;
 import com.testapp.weather.model.ForecastItem;
 import com.testapp.weather.model.Model;
+import com.testapp.weather.sync.StatusReceiver;
 import com.testapp.weather.util.binding.ClickAction;
 import com.testapp.weather.util.binding.OnActionClickListener;
 
@@ -97,13 +98,17 @@ public class WeekViewModel implements ViewModel, OnActionClickListener, LoaderMa
         mLoadedModels.clear();
         mLoadedModels.addAll(forecast);
         bindableAdapter.notifyDataSetChanged();
+        refreshStatus();
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> _loader) {
-
+        refreshStatus();
     }
 
+    private void refreshStatus() {
+        isEmptyMessageVisible.set(mLoadedModels.isEmpty());
+    }
 
 
     private static class EmptyCallback implements Callback {

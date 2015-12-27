@@ -10,11 +10,13 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 
 import com.testapp.weather.R;
 import com.testapp.weather.db.table.ForecastTable;
 import com.testapp.weather.db.table.SQLBaseTable;
+import com.testapp.weather.sync.StatusReceiver;
 import com.testapp.weather.sync.util.SyncManager;
 import com.testapp.weather.util.LocationLoader;
 import com.testapp.weather.util.PermissionHelper;
@@ -25,16 +27,18 @@ import java.util.Date;
 /**
  * Created on 25.12.2015.
  */
-public class MainViewModel implements ViewModel, SharedPreferences.OnSharedPreferenceChangeListener {
+public class MainViewModel implements ViewModel, SharedPreferences.OnSharedPreferenceChangeListener, StatusReceiver.SyncStatusListener {
     private static final int REQUEST_CODE_PERMISSIONS = 1;
 
     private Context mContext;
     private Callback mCallback;
+    private final StatusReceiver mStatusReceiver;
 
     public interface Callback {
         void requestPermissions(int _requestCode, String[] _requiredPermissions);
-
         void onError(Exception _e);
+        void onSyncStarted();
+        void onSyncFinished();
     }
 
     public MainViewModel(Context _context, Callback _callback) {
@@ -42,12 +46,15 @@ public class MainViewModel implements ViewModel, SharedPreferences.OnSharedPrefe
         mCallback = _callback != null ? _callback : new EmptyCallback();
         PreferenceManager.getDefaultSharedPreferences(_context)
                 .registerOnSharedPreferenceChangeListener(this);
+        mStatusReceiver = new StatusReceiver(this);
+        mContext.registerReceiver(mStatusReceiver, StatusReceiver.getIntentFilter());
     }
 
     @Override
     public void onDestroy() {
         PreferenceManager.getDefaultSharedPreferences(mContext)
                 .unregisterOnSharedPreferenceChangeListener(this);
+        mContext.unregisterReceiver(mStatusReceiver);
         mContext = null;
         mCallback = null;
     }
@@ -91,15 +98,37 @@ public class MainViewModel implements ViewModel, SharedPreferences.OnSharedPrefe
     }
 
 
+
+    @Override
+    public void onSyncStarted() {
+        mCallback.onSyncStarted();
+    }
+
+    @Override
+    public void onSyncFinished() {
+        mCallback.onSyncFinished();
+    }
+
+    @Override
+    public void onSyncError(int _errorCode, String _message) {
+        mCallback.onError(new Exception(_message));
+    }
+
     private static class EmptyCallback implements Callback {
         @Override
         public void requestPermissions(int _requestCode, String[] _requiredPermissions) {
-
         }
 
         @Override
         public void onError(Exception _e) {
+        }
 
+        @Override
+        public void onSyncStarted() {
+        }
+
+        @Override
+        public void onSyncFinished() {
         }
     }
 }
