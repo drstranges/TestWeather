@@ -34,19 +34,19 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
             android:gravity="center_vertical"
-            android:background="#2A000000"
             android:orientation="horizontal"
-            android:padding="4dp">
+            android:padding="8dp"
+            >
 
 
             <ImageView
                 android:id="@+id/ivIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:padding="4dp"
                 android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:layout_marginLeft="8dp"
                 android:setImageResource="@{ForecastUtils.getWeatherCondition(forecast.weatherId).getIconResId}"
                 tools:src="@drawable/ic_weather_clear"
                 />
@@ -56,11 +56,12 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:padding="8dp"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
                 android:textColor="@android:color/white"
                 android:text='@{@string/format_temp_short(forecast.maxTemp)}'
                 android:gravity="center"
-                android:textSize="18dp"
+                android:textSize="36sp"
                 android:ems="4"
                 tools:text="@string/format_temp_short"/>
 
@@ -72,7 +73,7 @@
             android:layout_gravity="center_vertical"
             android:background="#2A000000"
             android:orientation="vertical"
-            android:padding="8dp">
+            android:padding="16dp">
 
             <TextView
                 android:layout_width="match_parent"
@@ -80,7 +81,7 @@
                 android:ellipsize="end"
                 android:singleLine="true"
                 android:textColor="@android:color/white"
-                android:textSize="14dp"
+                android:textSize="20sp"
                 app:relativeDate="@{forecast.dateTime}"
                 tools:text="25.12.2015"/>
 
@@ -90,7 +91,7 @@
                 android:ellipsize="end"
                 android:singleLine="true"
                 android:text='@{@string/format_temp(forecast.maxTemp)}'
-                android:textSize="12dp"
+                android:textSize="14sp"
                 tools:text="@string/format_temp"/>
 
             <TextView
@@ -99,7 +100,7 @@
                 android:ellipsize="end"
                 android:singleLine="true"
                 android:text='@{@string/format_pressure(forecast.pressure)}'
-                android:textSize="12dp"
+                android:textSize="14sp"
                 tools:text="@string/format_pressure"/>
         </LinearLayout>
 
