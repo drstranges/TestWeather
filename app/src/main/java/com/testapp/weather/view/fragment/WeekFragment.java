@@ -34,10 +34,11 @@ public class WeekFragment extends Fragment implements WeekViewModel.Callback {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        setToolbarColor(getResources().getColor(R.color.colorPrimaryDark));
+        setToolbarColor(null);
+        getActivity().setTitle(R.string.menu_navigation_weather_week);
     }
 
-    protected void setToolbarColor(int _color) {
+    protected void setToolbarColor(Integer _color) {
         Activity activity = getActivity();
         if (activity instanceof ColorToolbarHolder) {
             ((ColorToolbarHolder) activity).setToolbarColor(_color);

@@ -15,4 +15,5 @@
     <string name="format_humidity">Humidity: <xliff:g id="humidity">%1d</xliff:g> %%</string>
     <string name="date_format_today">Today, <xliff:g id="date">%1$s</xliff:g></string>
     <string name="relative_date_tomorrow">Tomorrow, <xliff:g id="date">%1$s</xliff:g></string>
+    <string name="title_screen_settings">Settings</string>
 </resources>

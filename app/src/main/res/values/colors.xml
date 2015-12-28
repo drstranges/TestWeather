@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#303030</color>
-    <color name="colorPrimaryDark">#202020</color>
+    <color name="colorPrimary">#212121</color>
+    <color name="colorPrimaryDark">#1A1A1A</color>
     <color name="colorPrimaryLight">#CFD8DC</color>
     <color name="colorAccent">#FFC107</color>
     <color name="colorTextPrimary">#FFFFFF</color>
     <color name="colorTextSecondary">#727272</color>
     <color name="colorDivider">#B6B6B6</color>
 
-    <color name="colorWindowBackground">@color/colorPrimary</color>
+    <color name="colorWindowBackground">#303030</color>
 
     <color name="colorDrawerItem">@color/colorTextPrimary</color>
     <color name="colorDrawerItemActivated">@color/colorAccent</color>
-    <color name="colorDrawerBackground">@color/colorPrimaryDark</color>
+    <color name="colorDrawerBackground">@color/colorPrimary</color>
 
     <color name="colorWeatherStorm">#5D4037</color>
     <color name="colorWeatherDrizzle">#00ACC1</color>

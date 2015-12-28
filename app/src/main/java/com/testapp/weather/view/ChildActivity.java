@@ -82,8 +82,12 @@ public class ChildActivity extends AppCompatActivity implements ColorToolbarHold
     }
 
     @Override
-    public void setToolbarColor(int _color) {
+    public void setToolbarColor(Integer _color) {
+        if (_color != null) {
             final ColorDrawable colorDrawable = new ColorDrawable(_color);
             getWindow().setBackgroundDrawable(colorDrawable);
+        } else {
+            getWindow().setBackgroundDrawableResource(R.color.colorPrimaryDark);
+        }
     }
 }

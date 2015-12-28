@@ -52,10 +52,11 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        setToolbarColor(getResources().getColor(R.color.colorPrimaryDark));
+        setToolbarColor(null);
+        getActivity().setTitle(R.string.menu_navigation_settings);
     }
 
-    protected void setToolbarColor(int _color) {
+    protected void setToolbarColor(Integer _color) {
         Activity activity = getActivity();
         if (activity instanceof ColorToolbarHolder) {
             ((ColorToolbarHolder) activity).setToolbarColor(_color);

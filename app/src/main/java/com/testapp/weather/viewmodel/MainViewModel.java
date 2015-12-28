@@ -70,9 +70,8 @@ public class MainViewModel implements ViewModel, SharedPreferences.OnSharedPrefe
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (mContext.getString(R.string.pref_location_key).equals(key)
-                || mContext.getString(R.string.pref_sync_auto_key).equals(key)
-                || mContext.getString(R.string.pref_sync_interval_key).equals(key)) {
+        if (mContext.getString(R.string.pref_location_key).equals(key)) {
+            SyncManager.clearData(mContext);
             performSync();
         }
     }

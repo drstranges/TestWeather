@@ -1,10 +1,12 @@
 package com.testapp.weather.viewmodel;
 
 import android.content.Context;
+import android.database.ContentObserver;
 import android.database.Cursor;
 import android.databinding.ObservableBoolean;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -18,6 +20,7 @@ import com.testapp.weather.db.table.ForecastTable;
 import com.testapp.weather.model.ForecastItem;
 import com.testapp.weather.model.Model;
 import com.testapp.weather.sync.StatusReceiver;
+import com.testapp.weather.util.ObservedCursorLoader;
 import com.testapp.weather.util.binding.ClickAction;
 import com.testapp.weather.util.binding.OnActionClickListener;
 
@@ -83,7 +86,7 @@ public class WeekViewModel implements ViewModel, OnActionClickListener, LoaderMa
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String sortOrder = ForecastTable.FIELD_DATE_TIME + " ASC";
         final Uri uri = ForecastTable.buildUriWithStartDate(new Date(), 0, FORECAST_DAY_COUNT);
-        return new CursorLoader(mContext,
+        return new ObservedCursorLoader(mContext,
                 uri,
                 null,
                 null,

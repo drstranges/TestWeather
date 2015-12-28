@@ -49,12 +49,11 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(mBinding.toolbar);
         initNavigationDrawer();
         refreshToolbar();
+        mViewModel = new MainViewModel(this, this);
         if (savedInstanceState == null) {
             selectDrawerItem(R.id.menu_item_weather_today);
+            mViewModel.performSync();
         }
-
-        mViewModel = new MainViewModel(this, this);
-        mViewModel.performSync();
     }
 
     private void initNavigationDrawer() {
@@ -88,19 +87,21 @@ public class MainActivity extends AppCompatActivity
         switch (_itemResId) {
             case R.id.menu_item_weather_today:
                 navigateToScreen(DayFragment.class, null, false);
-                return true;
+                break;
             case R.id.menu_item_weather_week:
                 navigateToScreen(WeekFragment.class, null, false);
-                return true;
+                break;
             case R.id.menu_item_settings:
                 navigateToScreen(SettingsFragment.class, null, false);
-                return true;
+                break;
             case R.id.menu_item_logout:
                 logout();
-                return true;
+                break;
             default:
                 return false;
         }
+        mBinding.navigationView.setCheckedItem(_itemResId);
+        return true;
     }
 
     @Override
@@ -238,12 +239,17 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void setToolbarColor(int _color) {
+    public void setToolbarColor(Integer _color) {
         final ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            final ColorDrawable colorDrawable = new ColorDrawable(_color);
-            getWindow().setBackgroundDrawable(colorDrawable);
-            actionBar.setBackgroundDrawable(colorDrawable);
+            if (_color != null) {
+                final ColorDrawable colorDrawable = new ColorDrawable(_color);
+                getWindow().setBackgroundDrawable(colorDrawable);
+                actionBar.setBackgroundDrawable(colorDrawable);
+            } else {
+                getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimaryDark)));
+                actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimaryDark)));
+            }
             actionBar.setDisplayShowTitleEnabled(false);
             actionBar.setDisplayShowTitleEnabled(true);
         }

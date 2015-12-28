@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import com.testapp.weather.R;
+import com.testapp.weather.db.table.ForecastTable;
 import com.testapp.weather.util.LogHelper;
 import com.testapp.weather.util.PrefUtils;
 
@@ -89,4 +90,7 @@ public class SyncManager {
                 _context.getString(R.string.forecast_content_authority), bundle);
     }
 
+    public static void clearData(Context _context) {
+        _context.getContentResolver().delete(ForecastTable.CONTENT_URI, null, new String[]{});
+    }
 }

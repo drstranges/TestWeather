@@ -7,13 +7,13 @@ import android.databinding.ObservableField;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 
 import com.testapp.weather.db.DatabaseHelper;
 import com.testapp.weather.db.table.ForecastTable;
 import com.testapp.weather.model.ForecastItem;
 import com.testapp.weather.util.ForecastUtils;
+import com.testapp.weather.util.ObservedCursorLoader;
 
 import java.util.Date;
 
@@ -55,7 +55,7 @@ public class DayViewModel implements ViewModel, LoaderManager.LoaderCallbacks<Cu
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         final Uri uri = ForecastTable.buildUriWithDate(new Date(timeMillis));
-        return new CursorLoader(mContext,
+        return new ObservedCursorLoader(mContext,
                 uri,
                 null,
                 null,

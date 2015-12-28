@@ -86,16 +86,6 @@ public class ForecastTable extends SQLBaseTable<ForecastItem> {
                 .build();
     }
 
-//    private static long getDateForMidnight(long _millis) {
-//        Calendar date = Calendar.getInstance();
-//        date.setTimeInMillis(_millis);
-//        date.set(Calendar.HOUR_OF_DAY, 0);
-//        date.set(Calendar.MINUTE, 0);
-//        date.set(Calendar.SECOND, 0);
-//        date.set(Calendar.MILLISECOND, 0);
-//        return date.getTimeInMillis();
-//    }
-
     public static Uri buildUriWithDate(Date _date) {
         //        long startDate = getDateForMidnight(_date);
         return CONTENT_URI.buildUpon().appendPath(dateToDatabaseFormat(_date)).build();
