@@ -83,7 +83,7 @@ public class ForecastUtils {
         return WeatherCondition.CLOUDS;
     }
 
-    public String getWindDirection(double _windDirection) {
+    public static String getWindDirection(double _windDirection) {
         // From wind direction in degrees, determine compass direction as a string (e.g NW)
         String direction = "";
         if (_windDirection >= 337.5 || _windDirection < 22.5) {

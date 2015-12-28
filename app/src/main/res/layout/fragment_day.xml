@@ -17,19 +17,6 @@
         android:layout_height="match_parent"
         app:backgroundColorResId="@{ForecastUtils.getWeatherCondition(viewModel.forecast.weatherId).getColorResId}">
 
-        <!--<android.support.v7.widget.Toolbar-->
-            <!--android:id="@+id/toolbar"-->
-            <!--style="@style/ToolbarStyle.Transparent">-->
-
-            <!--<TextView-->
-                <!--android:id="@+id/toolbar_title"-->
-                <!--style="@style/DayFragmentTitleStyle"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--app:relativeDate="@{viewModel.timeMillis}"-->
-                <!--tools:text="Sunday, 27 December"/>-->
-        <!--</android.support.v7.widget.Toolbar>-->
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -95,7 +82,7 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginLeft="72dp"
                 android:layout_marginTop="8dp"
-                android:text='@{@string/format_wind(viewModel.forecast.windSpeed, viewModel.forecast.windDirection)}'
+                android:text='@{@string/format_wind(viewModel.forecast.windSpeed, ForecastUtils.getWindDirection(viewModel.forecast.windDirection))}'
                 android:textSize="20sp"
                 tools:text="@string/format_wind"/>
 
