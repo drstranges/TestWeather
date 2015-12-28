@@ -42,7 +42,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="48dp"
+                android:layout_marginBottom="32dp"
                 android:gravity="center_horizontal"
                 android:textSize="48sp"
                 app:maxTemp='@{viewModel.forecast.maxTemp}'
@@ -58,7 +58,7 @@
                 android:layout_marginLeft="72dp"
                 android:layout_marginTop="8dp"
                 android:text='@{@string/format_pressure(viewModel.forecast.pressure)}'
-                android:textSize="20sp"
+                android:textSize="18sp"
                 tools:text="@string/format_pressure"/>
 
             <View style="@style/divider_horizontal"/>
@@ -70,7 +70,7 @@
                 android:layout_marginLeft="72dp"
                 android:layout_marginTop="8dp"
                 android:text='@{@string/format_humidity(viewModel.forecast.humidity)}'
-                android:textSize="20sp"
+                android:textSize="18sp"
                 tools:text="@string/format_humidity"/>
 
             <View style="@style/divider_horizontal"/>
@@ -83,7 +83,7 @@
                 android:layout_marginLeft="72dp"
                 android:layout_marginTop="8dp"
                 android:text='@{@string/format_wind(viewModel.forecast.windSpeed, ForecastUtils.getWindDirection(viewModel.forecast.windDirection))}'
-                android:textSize="20sp"
+                android:textSize="18sp"
                 tools:text="@string/format_wind"/>
 
             <View style="@style/divider_horizontal"/>

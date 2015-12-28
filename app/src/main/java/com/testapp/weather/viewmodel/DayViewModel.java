@@ -22,7 +22,7 @@ import java.util.Date;
  */
 public class DayViewModel implements ViewModel, LoaderManager.LoaderCallbacks<Cursor> {
 
-    private static final int LOADER_ID_FORECAST = 2;
+    private static final int LOADER_ID_FORECAST = 1;
 
     private Context mContext;
     private Callback mCallback;

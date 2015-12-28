@@ -35,7 +35,7 @@ import java.util.List;
 public final class SyncAdapter extends AbstractThreadedSyncAdapter {
 
     private static final String LOG_TAG = LogHelper.makeLogTag(SyncAdapter.class);
-    private static final int NUM_DAYS_SYNC = 7;
+    private static final int NUM_DAYS_SYNC = 16;
 
     public SyncAdapter(Context context, boolean autoInitialize) {
         super(context, autoInitialize);

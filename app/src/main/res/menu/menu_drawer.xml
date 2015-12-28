@@ -19,6 +19,15 @@
             android:icon="@drawable/ic_week"
             app:showAsAction="ifRoom"
             android:title="@string/menu_navigation_weather_week" />
+
+        <item
+            android:id="@+id/menu_item_weather_history"
+            android:checkable="true"
+            android:checked="false"
+            android:icon="@drawable/ic_week"
+            app:showAsAction="ifRoom"
+            android:title="@string/menu_navigation_weather_history" />
+
         <item
             android:id="@+id/menu_item_settings"
             android:checkable="true"
@@ -37,7 +46,7 @@
             android:id="@+id/menu_item_logout"
             android:checkable="false"
             android:icon="@drawable/ic_exit"
-            android:title="Logout" />
+            android:title="@string/logout" />
 
         </group>
 

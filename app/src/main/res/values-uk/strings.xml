@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="http://schemas.android.com/tools">
+    <string name="app_name">Погода</string>
+    <string name="date_format_today">Сьогодні, <xliff:g id="date">%1$s</xliff:g></string>
+    <string name="error_location_not_found">Помилка оновлення: можливо не задане місцеположення!</string>
+    <string name="format_humidity">Вологість: <xliff:g id="humidity">%1d</xliff:g> %%</string>
+    <string name="format_pressure">Атм. тиск: <xliff:g id="pressure">%1.0f</xliff:g> ГПа</string>
+    <string name="format_temp">Температура: <xliff:g id="temp">%1.0f</xliff:g>\u00B0</string>
+    <string name="format_temp_short"><xliff:g id="temp">%1.0f</xliff:g>\u00B0</string>
+    <string name="format_wind">Вітер: <xliff:g id="speed">%1$1.0f</xliff:g> км/год, <xliff:g id="direction">%2$s</xliff:g></string>
+    <string name="menu_navigation_settings">Налаштування</string>
+    <string name="menu_navigation_weather_today">Погода на сьогодні</string>
+    <string name="menu_navigation_weather_week">Погода на тиждень</string>
+    <string name="message_list_empty">Ооопсс… Не вдалося отримати прогноз для заданої локації, або проблеми із з\'єднанням. Перовірте налаштування!</string>
+    <string name="navigation_drawer_close">Закрити меню</string>
+    <string name="navigation_drawer_open">Відкрити меню</string>
+    <string name="pref_ask_on_exit_title">Захист від виходу</string>
+    <string name="pref_category_general">Загальні</string>
+    <string name="pref_category_sync">Синхронізація</string>
+    <string name="pref_location_title">Локація</string>
+    <string name="pref_sync_auto_title">Автооновлення</string>
+    <string name="pref_sync_interval_title">Інтервал</string>
+    <string name="pref_sync_update_on_start_title">Оновлювати при запуску</string>
+    <string name="pref_sync_wifi_only_title">Тільки Wi-Fi</string>
+    <string name="press_back_twice">Натисніть "Назад" двічі для виходу!</string>
+    <string name="relative_date_tomorrow">Завтра, <xliff:g id="date">%1$s</xliff:g></string>
+    <string name="logout">Вихід</string>
+    <string name="menu_navigation_weather_history">Історія</string>
+</resources>

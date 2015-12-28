@@ -23,6 +23,7 @@ import com.testapp.weather.databinding.ActivityMainBinding;
 import com.testapp.weather.util.LogHelper;
 import com.testapp.weather.util.PrefUtils;
 import com.testapp.weather.view.fragment.DayFragment;
+import com.testapp.weather.view.fragment.HistoryFragment;
 import com.testapp.weather.view.fragment.SettingsFragment;
 import com.testapp.weather.view.fragment.WeekFragment;
 import com.testapp.weather.viewmodel.MainViewModel;
@@ -90,6 +91,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.menu_item_weather_week:
                 navigateToScreen(WeekFragment.class, null, false);
+                break;
+            case R.id.menu_item_weather_history:
+                navigateToScreen(HistoryFragment.class, null, false);
                 break;
             case R.id.menu_item_settings:
                 navigateToScreen(SettingsFragment.class, null, false);
