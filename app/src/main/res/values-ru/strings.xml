@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Weather</string>
+    <string name="date_format_today">Сегодня, <xliff:g id="date">%1$s</xliff:g></string>
+    <string name="error_location_not_found">Ошибка обновления: возможно не задано местоположение!</string>
+    <string name="format_humidity">Влажность: <xliff:g id="humidity">%1d</xliff:g> %%</string>
+    <string name="format_pressure">Давление: <xliff:g id="pressure">%1.0f</xliff:g> ГПа</string>
+    <string name="format_temp">Температура: <xliff:g id="temp">%1.0f</xliff:g>\u00B0</string>
+    <string name="format_temp_short"><xliff:g id="temp">%1.0f</xliff:g>\u00B0</string>
+    <string name="format_wind">Ветер: <xliff:g id="speed">%1$1.0f</xliff:g> км/ч, <xliff:g id="direction">%2$s</xliff:g></string>
+    <string name="menu_navigation_settings">Настройки</string>
+    <string name="menu_navigation_weather_today">Погода на сегодня</string>
+    <string name="menu_navigation_weather_week">Погода на неделю</string>
+    <string name="message_list_empty">Ооой… Не удалось получить погоду для заданной локации или проблемы с Интернет. Проверте настройки!</string>
+    <string name="navigation_drawer_close">Закрыть меню</string>
+    <string name="navigation_drawer_open">Открыть меню</string>
+    <string name="pref_ask_on_exit_title">Спрашивать при выходе</string>
+    <string name="pref_category_general">Общие</string>
+    <string name="pref_category_sync">Синхронизация</string>
+    <string name="pref_location_title">Местоположение</string>
+    <string name="pref_sync_auto_title">Обновлять автоматически</string>
+    <string name="pref_sync_interval_title">Интервал обновлений</string>
+    <string name="pref_sync_update_on_start_title">Обновлять при старте</string>
+    <string name="pref_sync_wifi_only_title">Только Wi-Fi</string>
+    <string name="press_back_twice">Нажмите "Назад" дважды для выхода!</string>
+    <string name="relative_date_tomorrow">Завтра, <xliff:g id="date">%1$s</xliff:g></string>
+    <string name="title_screen_settings">Настройки</string>
+</resources>
