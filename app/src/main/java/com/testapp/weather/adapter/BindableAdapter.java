@@ -9,6 +9,7 @@ import com.testapp.weather.adapter.util.BindingHolder;
 import java.util.List;
 
 /**
+ * Extended RecyclerView.Adapter to use with data binding
  * Created on 25.12.2015.
  */
 public abstract class BindableAdapter<T> extends RecyclerView.Adapter<BindingHolder> implements Observable {

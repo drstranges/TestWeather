@@ -12,9 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Helper class for parsing forecast response
  * Created by d_rom on 26.12.2015.
  */
-public class ParseUtils {
+public final class ParseUtils {
 
     public static List<ForecastItem> parseForecast(@NonNull JSONObject _jsonObject) throws JSONException {
         List<ForecastItem> list = new ArrayList<>();
@@ -29,7 +30,7 @@ public class ParseUtils {
         return list;
     }
 
-    public static ForecastItem parseForecastItem(JSONObject _jsonItem) throws JSONException {
+    private static ForecastItem parseForecastItem(JSONObject _jsonItem) throws JSONException {
 
         ForecastItem item = new ForecastItem();
         // The date/time is returned as a long in unixtime GMT (for convert multiply 1000).

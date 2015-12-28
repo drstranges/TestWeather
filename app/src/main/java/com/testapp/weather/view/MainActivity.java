@@ -22,8 +22,8 @@ import com.testapp.weather.R;
 import com.testapp.weather.databinding.ActivityMainBinding;
 import com.testapp.weather.util.LogHelper;
 import com.testapp.weather.util.PrefUtils;
-import com.testapp.weather.view.fragment.SettingsFragment;
 import com.testapp.weather.view.fragment.DayFragment;
+import com.testapp.weather.view.fragment.SettingsFragment;
 import com.testapp.weather.view.fragment.WeekFragment;
 import com.testapp.weather.viewmodel.MainViewModel;
 
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void initNavigationDrawer() {
-        mDrawerLayout = mBinding.drawerLayout;
+        mDrawerLayout = (DrawerLayout) mBinding.getRoot().findViewById(R.id.drawer_layout);
         if (mDrawerLayout != null) {
             mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mBinding.toolbar,
                     R.string.navigation_drawer_open, R.string.navigation_drawer_close);

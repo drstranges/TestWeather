@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.IBinder;
 
 /**
+ * Stub Service for SyncAdapter
  * Created on 24.12.2015.
  */
 public class SyncService extends Service {

@@ -6,18 +6,15 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
-import android.text.TextUtils;
 
-import com.testapp.weather.db.util.DbUtils;
 import com.testapp.weather.model.ForecastItem;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class ForecastTable extends SQLBaseTable<ForecastItem> {
+public final class ForecastTable extends SQLBaseTable<ForecastItem> {
 
     public static final String TABLE_NAME = "forecast";
 
@@ -78,7 +75,6 @@ public class ForecastTable extends SQLBaseTable<ForecastItem> {
     }
 
     public static Uri buildUriWithStartDate(Date _startDate, long _offset, long _limit) {
-//        long startDate = getDateForMidnight(_startDate);
         return CONTENT_URI.buildUpon()
                 .appendQueryParameter(URI_PARAM_START_DATE, dateToDatabaseFormat(_startDate))
                 .appendQueryParameter(URI_PARAM_QUERY_OFFSET, String.valueOf(_offset))
@@ -87,7 +83,6 @@ public class ForecastTable extends SQLBaseTable<ForecastItem> {
     }
 
     public static Uri buildUriWithDate(Date _date) {
-        //        long startDate = getDateForMidnight(_date);
         return CONTENT_URI.buildUpon().appendPath(dateToDatabaseFormat(_date)).build();
     }
 

@@ -1,14 +1,13 @@
 package com.testapp.weather.util;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.net.Uri;
 import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
 
 import com.testapp.weather.sync.StatusReceiver;
 
 /**
+ * CursorLoader which call {@link #forceLoad()} each time as sync finished. Fix some bug with cursor observing
  * Created by d_rom on 28.12.2015.
  */
 public class ObservedCursorLoader extends CursorLoader implements StatusReceiver.SyncStatusListener {

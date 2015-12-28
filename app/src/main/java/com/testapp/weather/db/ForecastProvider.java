@@ -8,9 +8,8 @@ import android.net.Uri;
 import android.text.TextUtils;
 
 import com.testapp.weather.db.table.ForecastTable;
-import com.testapp.weather.db.table.SQLBaseTable;
 
-public class ForecastProvider extends ContentProvider {
+public final class ForecastProvider extends ContentProvider {
 
     private static final UriMatcher sUriMatcher = buildUriMatcher();
     private DatabaseHelper mOpenHelper;
@@ -21,7 +20,7 @@ public class ForecastProvider extends ContentProvider {
     private static UriMatcher buildUriMatcher() {
 
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
-        final String authority = SQLBaseTable.CONTENT_AUTHORITY;
+        final String authority = ForecastTable.CONTENT_AUTHORITY;
 
         matcher.addURI(authority, ForecastTable.TABLE_NAME, FORECAST);
         matcher.addURI(authority, ForecastTable.TABLE_NAME + "/*", FORECAST_WITH_DATE);

@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 /**
+ * Use this class to provide "load on demand" functionality for RecyclerView
  * Created by romka on 25.12.15.
  */
 public class EndlessOnScrollListener extends RecyclerView.OnScrollListener {

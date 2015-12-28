@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 import com.testapp.weather.R;
 
 /**
+ * Helper class for working with preferences
  * Created on 24.12.2015.
  */
 public final class PrefUtils {

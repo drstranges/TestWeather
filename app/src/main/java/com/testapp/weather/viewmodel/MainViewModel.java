@@ -1,28 +1,17 @@
 package com.testapp.weather.viewmodel;
 
-import android.app.Activity;
-import android.app.LoaderManager;
 import android.content.Context;
-import android.content.CursorLoader;
-import android.content.Loader;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 
 import com.testapp.weather.R;
-import com.testapp.weather.db.table.ForecastTable;
-import com.testapp.weather.db.table.SQLBaseTable;
+import com.testapp.weather.db.ForecastManager;
 import com.testapp.weather.sync.StatusReceiver;
 import com.testapp.weather.sync.util.SyncManager;
 import com.testapp.weather.util.LocationLoader;
 import com.testapp.weather.util.PermissionHelper;
 import com.testapp.weather.util.PrefUtils;
-
-import java.util.Date;
 
 /**
  * Created on 25.12.2015.
@@ -36,8 +25,11 @@ public class MainViewModel implements ViewModel, SharedPreferences.OnSharedPrefe
 
     public interface Callback {
         void requestPermissions(int _requestCode, String[] _requiredPermissions);
+
         void onError(Exception _e);
+
         void onSyncStarted();
+
         void onSyncFinished();
     }
 
@@ -71,7 +63,7 @@ public class MainViewModel implements ViewModel, SharedPreferences.OnSharedPrefe
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (mContext.getString(R.string.pref_location_key).equals(key)) {
-            SyncManager.clearData(mContext);
+            ForecastManager.clearOldData(mContext);
             performSync();
         }
     }
@@ -87,15 +79,14 @@ public class MainViewModel implements ViewModel, SharedPreferences.OnSharedPrefe
 
 
     public boolean onRequestPermissionResult(int _requestCode, String[] _permissions, int[] _grantResults) {
-        if (REQUEST_CODE_PERMISSIONS == _requestCode){
-        if(PermissionHelper.isSomePermissionGranted(_grantResults)) {
-            findLocation();
-        }
+        if (REQUEST_CODE_PERMISSIONS == _requestCode) {
+            if (PermissionHelper.isSomePermissionGranted(_grantResults)) {
+                findLocation();
+            }
             return true;
         }
         return false;
     }
-
 
 
     @Override

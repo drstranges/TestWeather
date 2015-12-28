@@ -14,7 +14,7 @@ import java.util.List;
  * Helper class to simplify adapter configuration
  * Created by d_rom on 25.12.2015.
  */
-public class ListConfig {
+public final class ListConfig {
 
     private final BindableAdapter mBindableAdapter;
     private final RecyclerView.LayoutManager mLayoutManager;

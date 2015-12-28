@@ -134,17 +134,6 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         return contentValues;
     }
 
-    public <T> ContentValues convertToCv(@NonNull T item, Class<T> _class) {
-        ContentValues contentValues = new ContentValues();
-        try {
-            if (ForecastItem.class.equals(_class)) {
-                return mForecastTable.convertToCV((ForecastItem) item);
-            }//else if
-        } catch (ClassCastException e) {
-            LogHelper.LOGE(LOG_TAG, "convertToCv exception", e);
-        }
-        return contentValues;
-    }
 
     private void openDb(boolean _withWritableAccess) {
         if (_withWritableAccess) {

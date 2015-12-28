@@ -1,17 +1,6 @@
 package com.testapp.weather.model;
 
 
-import android.support.annotation.NonNull;
-
-import com.testapp.weather.sync.util.OpenWeatherContract;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * This class represent the weather forecast for a certain place and date
  * Data takes from json Object like this:
@@ -45,7 +34,7 @@ import java.util.List;
  * Temperature in Kelvin (subtract 273.15 to convert to Celsius)
  * Created on 23.12.2015.
  */
-public class ForecastItem implements Model {
+public final class ForecastItem implements Model {
     public Long id;
     public long dateTime;       // dataTime in milliseconds
     public int weatherId;       // Weather condition codes

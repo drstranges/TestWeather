@@ -47,91 +47,13 @@ public abstract class SQLBaseTable<T> {
 
     public abstract ContentValues convertToCV(final T item);
 
-    public ContentValues[] convertToCV(@NonNull final List<T> items){
+    public ContentValues[] convertToCV(@NonNull final List<T> items) {
         ContentValues[] list = new ContentValues[items.size()];
         int count = items.size();
-        for(int i = 0; i < count; i++){
+        for (int i = 0; i < count; i++) {
             list[i] = convertToCV(items.get(i));
         }
         return list;
-    }
-
-    protected T get(final String selection, final String[] args) {
-        return get(selection, args, null);
-    }
-
-    protected T get(final String selection, final String[] args, final String orderBy) {
-        final Cursor cur = mSQLiteDatabase.query(
-                getTableName(),                     // The table name
-                null,                               // A list of which columns to return
-                selection,                          // SQL WHERE clause
-                args,                               // selectionArgs to SQL WHERE clause
-                null,                               // GROUP BY clause
-                null,                               // SQL HAVING clause
-                orderBy);                              // SQL ORDER BY clause
-        return loadItemAndCloseCursor(cur);
-    }
-
-    protected T loadItemAndCloseCursor(Cursor _cur) {
-        if (!DbUtils.checkCursor(_cur)) return null;
-        final T item = loadDbItem(_cur);
-        _cur.close();
-        return item;
-    }
-
-    public T get(long id) {
-        return get(FIELD_ID + " = ?", new String[]{String.valueOf(id)}, null);
-    }
-
-    protected int getCount(final String selection, final String[] args) {
-        int res = 0;
-        final String sqlQ = "select count(*) from " + getTableName()
-                + " where " + selection + ";";
-        final Cursor cur = mSQLiteDatabase.rawQuery(sqlQ, args);
-        if (DbUtils.checkCursor(cur)) {
-            res = cur.getInt(0);
-            cur.close();
-        }
-        return res;
-    }
-    public int getCount() {
-        int res = 0;
-        final String sqlQ = "select count(*) from " + getTableName() + ";";
-        final Cursor cur = mSQLiteDatabase.rawQuery(sqlQ, null);
-        if (DbUtils.checkCursor(cur)) {
-            res = cur.getInt(0);
-            cur.close();
-        }
-        return res;
-    }
-
-    public List<T> getAll(final String orderBy) {
-        final Cursor cur = mSQLiteDatabase.query(
-                getTableName(),                    // The table name
-                null,
-                null,
-                null,
-                null,                               // GROUP BY clause
-                null,
-                orderBy);                          // SQL ORDER BY clause
-        return getList(cur, true);
-    }
-
-    protected List<T> getList(final String selection, final String[] selectionArgs, final String orderBy) {
-        return getList(selection, selectionArgs, null, orderBy);
-    }
-
-    protected List<T> getList(final String selection, final String[] selectionArgs, final String groupBy,
-                              final String orderBy) {
-        final Cursor cur = mSQLiteDatabase.query(
-                getTableName(),                    // The table name
-                null,
-                selection,                         // SQL WHERE clause
-                selectionArgs,                     // selectionArgs to SQL WHERE clause
-                groupBy,                           // GROUP BY clause
-                null,
-                orderBy);                          // SQL ORDER BY clause
-        return getList(cur, true);
     }
 
     public List<T> getList(final Cursor cur, final boolean shouldCloseCursor) {
@@ -147,101 +69,6 @@ public abstract class SQLBaseTable<T> {
         return itemList;
     }
 
-    protected List<String> getStringList(final String column, final String selection, final String[] selectionArgs) {
-        return getStringList(column, selection, selectionArgs, null, null);
-    }
-
-    protected List<String> getStringList(final String column, final String selection, final String[] selectionArgs,
-                                         final String groupBy, final String orderBy) {
-        List<String> itemList = new ArrayList<>();
-        assert (column != null);
-        final Cursor cur = mSQLiteDatabase.query(
-                getTableName(),                   // The table name
-                new String[]{column},             // A list of which columns to return
-                selection,
-                selectionArgs,
-                groupBy,                          // SQL GROUP BY clause
-                null,
-                orderBy);                          // SQL ORDER BY clause
-        if (DbUtils.checkCursor(cur)) {
-            do {
-                itemList.add(cur.getString(cur.getColumnIndex(column)));
-            }
-            while (cur.moveToNext());
-            cur.close();
-        }
-        return itemList;
-    }
-
-    public <J> List<J> getAllInColumn(final String column, Class<J> _clazz, final J _defaultValue, final String orderBy) {
-        return getAllInColumn(column, _clazz, _defaultValue, null, null, null, orderBy);
-    }
-
-    public <J> List<J> getAllInColumn(final String column, Class<J> _clazz, final J _defaultValue, final String _selection, final String[] _selectionArgs) {
-        return getAllInColumn(column, _clazz, _defaultValue, _selection, _selectionArgs, null, null);
-    }
-
-    public  <J> List<J> getAllInColumn(final String column, Class<J> _clazz, final J _defaultValue, final String selection, final String[] selectionArgs,
-                                         final String groupBy, final String orderBy) {
-        List<J> itemList = new ArrayList<>();
-        assert (column != null);
-        final Cursor cur = mSQLiteDatabase.query(
-                getTableName(),                   // The table name
-                new String[]{column},             // A list of which columns to return
-                selection,
-                selectionArgs,
-                groupBy,                          // SQL GROUP BY clause
-                null,
-                orderBy);                          // SQL ORDER BY clause
-        if (DbUtils.checkCursor(cur)) {
-            do {
-                itemList.add(getDataItem(cur, cur.getColumnIndex(column), _clazz, _defaultValue));
-            }
-            while (cur.moveToNext());
-            cur.close();
-        }
-        return itemList;
-    }
-
-    protected <J> J getData(final String column, Class<J> _clazz, final J _defaultValue, final String selection, final String[] selectionArgs,
-                                                     final String groupBy, final String orderBy) {
-        assert (column != null);
-        final Cursor cur = mSQLiteDatabase.query(
-                getTableName(),                   // The table name
-                new String[]{column},             // A list of which columns to return
-                selection,
-                selectionArgs,
-                groupBy,                          // SQL GROUP BY clause
-                null,
-                orderBy);                          // SQL ORDER BY clause
-        if (!DbUtils.checkCursor(cur)) return null;
-        final J item = getDataItem(cur, cur.getColumnIndex(column), _clazz, _defaultValue);
-        cur.close();
-        return item;
-    }
-
-    private <J> J getDataItem(Cursor _cur, int _columnIndex, Class<J> _clazz, final J _defaultValue) {
-        try {
-                if (Integer.class.equals(_clazz))
-                    return _clazz.cast(_cur.getInt(_columnIndex));
-                else if (Long.class.equals(_clazz))
-                    return _clazz.cast(_cur.getLong(_columnIndex));
-                else if (Boolean.class.equals(_clazz))
-                    return _clazz.cast(_cur.getInt(_columnIndex) == 1);
-            else if (String.class.equals(_clazz))
-                return _clazz.cast(_cur.getString(_columnIndex));
-            else
-                return _defaultValue;
-        }catch (ClassCastException e){
-            e.printStackTrace();
-        }
-        return _defaultValue;
-    }
-
-    public List<String> getAllInColumn(final String column) {
-        return getStringList(column, null, null);
-    }
-
     public int delete(final String selection, final String[] selectionArgs) {
         return mSQLiteDatabase.delete(getTableName(), selection, selectionArgs);
     }
@@ -255,11 +82,6 @@ public abstract class SQLBaseTable<T> {
                 getTableName(),
                 null,
                 null);
-    }
-
-    public long insert(final T item) {
-        ContentValues cv = convertToCV(item);
-        return mSQLiteDatabase.insert(getTableName(), null, cv);
     }
 
     public long insertIgnoreConflict(final ContentValues _cv, final String _idColumnName) {
@@ -278,7 +100,7 @@ public abstract class SQLBaseTable<T> {
 
             Object[] bindArgs = new Object[_cv.size()];
             int i = 0;
-            for (Map.Entry<String, Object> entry: _cv.valueSet()) {
+            for (Map.Entry<String, Object> entry : _cv.valueSet()) {
                 sql.append((i > 0) ? " AND " : "");
                 sql.append(entry.getKey());
                 sql.append(" = ?");
@@ -292,7 +114,7 @@ public abstract class SQLBaseTable<T> {
 
             try {
                 return stmt.simpleQueryForLong();
-            } catch (SQLiteDoneException ex){
+            } catch (SQLiteDoneException ex) {
                 ex.printStackTrace();
             } finally {
                 stmt.close();
@@ -301,36 +123,13 @@ public abstract class SQLBaseTable<T> {
         }
     }
 
-    public long insertIgnoreConflict(final T item, final String _idColumnName) {
-        ContentValues cv = convertToCV(item);
-        return insertIgnoreConflict(cv, _idColumnName);
-    }
-
-    public synchronized long updateOrInsert(@Nullable final Long oldId, final T _item, final String _idColumnName) {
-        ContentValues cv = convertToCV(_item);
-        if(oldId != null){
-            update(oldId, cv);
-        }
-        return insertIgnoreConflict(cv, _idColumnName);
-    }
-
     public long updateOrInsert(@Nullable ContentValues _cv) {
         if (_cv == null) return -1;
         final Long id = _cv.getAsLong(FIELD_ID);
-        if(id != null){
+        if (id != null) {
             update(id, _cv);
         }
         return insertIgnoreConflict(_cv, FIELD_ID);
-    }
-
-    public int update(final long oldId, final T item) {
-        ContentValues cv = convertToCV(item);
-        return update(oldId, cv);
-    }
-
-    protected int update(final String selection, final String[] selectionArgs, final T item) {
-        ContentValues cv = convertToCV(item);
-        return update(cv, selection, selectionArgs);
     }
 
     public int update(final long oldId, final ContentValues _cv) {
@@ -342,22 +141,11 @@ public abstract class SQLBaseTable<T> {
             return mSQLiteDatabase.update(getTableName(), _cv, selection, selectionArgs);
         } catch (SQLException e) {
             e.printStackTrace();
-//            Log.e(DebugUtils.TAG_DEBUG, "Error updating:" + " Table " + getTableName()
-//                    + "; class = " + item.getClass(), e);
             return -1;
         }
     }
 
-    public boolean exists(final Long id) {
-        return getCount(FIELD_ID + " = ?", new String[]{String.valueOf(id)}) > 0;
-    }
-
-    public boolean exists(final T item) {
-        List<T> itemList = getAll(null);
-        return itemList.contains(item);
-    }
-
-    public void closeDb(){
+    public void closeDb() {
         if (mSQLiteDatabase.isOpen()) {
             mSQLiteDatabase.close();
         }
@@ -373,17 +161,6 @@ public abstract class SQLBaseTable<T> {
                 null,
                 _orderBy,
                 _limit);
-    }
-
-    public Cursor get(String[] _projection, long _id, String _orderBy) {
-        return mSQLiteDatabase.query(
-                getTableName(),                     // The table name
-                _projection,                        // A list of which columns to return
-                SELECT_BY_ID,                       // SQL WHERE clause
-                getArgsForSelectById(_id),          // selectionArgs to SQL WHERE clause
-                null,                               // GROUP BY clause
-                null,                               // SQL HAVING clause
-                _orderBy);                          // SQL ORDER BY clause
     }
 
     private String[] getArgsForSelectById(long _id) {

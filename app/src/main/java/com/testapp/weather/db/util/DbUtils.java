@@ -2,7 +2,7 @@ package com.testapp.weather.db.util;
 
 import android.database.Cursor;
 
-public class DbUtils {
+public final class DbUtils {
     /**
      * This method check cursor to Null or Empty.
      * If cursor is Empty then execute close.

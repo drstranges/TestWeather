@@ -8,6 +8,12 @@ import android.content.IntentFilter;
 import com.testapp.weather.util.LogHelper;
 
 /**
+ * Use this class for send and receive status broadcast.
+ * You can broadcast:
+ * {@link StatusReceiver#sendSyncStarted(Context)}
+ * {@link StatusReceiver#sendSyncFinished(Context)}
+ * {@link StatusReceiver#sendSyncError(Context, int, String)}
+ * To receive status - just use this class as Broadcast receiver.
  * Created on 24.12.2015.
  */
 public class StatusReceiver extends BroadcastReceiver {
@@ -51,7 +57,7 @@ public class StatusReceiver extends BroadcastReceiver {
         if (!ACTION_STATUS.equals(action)) return;
         final int status = intent.getIntExtra(EXTRA_STATUS, -1);
         LogHelper.LOGD(LOG_TAG, "onReceive: " + action);
-        switch (status){
+        switch (status) {
             case STATUS_SYNC_STARTED:
                 mStatusListener.onSyncStarted();
                 break;

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.testapp.weather.R;
 import com.testapp.weather.databinding.FragmentWeekBinding;
 import com.testapp.weather.model.ForecastItem;
+import com.testapp.weather.util.ForecastUtils;
 import com.testapp.weather.view.ColorToolbarHolder;
 import com.testapp.weather.view.Navigator;
 import com.testapp.weather.viewmodel.WeekViewModel;
@@ -18,17 +19,26 @@ import com.testapp.weather.viewmodel.WeekViewModel;
 /**
  * Created on 23.12.2015.
  */
-public class WeekFragment extends Fragment implements WeekViewModel.Callback {
-    private WeekViewModel mViewModel;
-    private FragmentWeekBinding mBinding;
+public class WeekFragment extends BaseFragment<WeekViewModel, FragmentWeekBinding> implements WeekViewModel.Callback {
 
-    @Nullable
+
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mBinding = FragmentWeekBinding.inflate(inflater, container, false);
-        mViewModel = new WeekViewModel(getContext(), getLoaderManager(), this);
-        mBinding.setViewModel(mViewModel);
-        return mBinding.getRoot();
+    protected void onInitArgs() {
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_week;
+    }
+
+    @Override
+    protected WeekViewModel createViewModel() {
+        return new WeekViewModel(getContext(), getLoaderManager(), this);
+    }
+
+    @Override
+    protected void onBindViewModel(FragmentWeekBinding _binding, WeekViewModel _viewModel) {
+        _binding.setViewModel(_viewModel);
     }
 
     @Override
@@ -38,24 +48,15 @@ public class WeekFragment extends Fragment implements WeekViewModel.Callback {
         getActivity().setTitle(R.string.menu_navigation_weather_week);
     }
 
-    protected void setToolbarColor(Integer _color) {
-        Activity activity = getActivity();
-        if (activity instanceof ColorToolbarHolder) {
-            ((ColorToolbarHolder) activity).setToolbarColor(_color);
-        }
-    }
-
-    @Override
-    public void onError(Exception _e) {
-
-    }
-
     @Override
     public void onForecastClicked(View _view, ForecastItem _forecast) {
         final Activity activity = getActivity();
         if (activity instanceof Navigator){
+            int color = getResources().getColor(
+                    ForecastUtils.getWeatherCondition(_forecast.weatherId).getColorResId());
             ((Navigator) activity)
-                    .navigateToScreen(DayFragment.class, DayFragment.buildArgs(_forecast.dateTime), true);
+                    .navigateToScreen(DayFragment.class,
+                            DayFragment.buildArgs(_forecast.dateTime, color), true);
         }
     }
 

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Helper class for simplify using Android M permission system
  * Created by romka on 25.12.15.
  */
 public class PermissionHelper {

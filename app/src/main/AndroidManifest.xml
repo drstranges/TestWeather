@@ -36,8 +36,9 @@
                 <action android:name="android.content.SyncAdapter"/>
             </intent-filter>
 
-            <meta-data android:name="android.content.SyncAdapter"
-                       android:resource="@xml/sync_adapter" />
+            <meta-data
+                android:name="android.content.SyncAdapter"
+                android:resource="@xml/sync_adapter"/>
         </service>
 
         <service
@@ -47,7 +48,7 @@
             </intent-filter>
             <meta-data
                 android:name="android.accounts.AccountAuthenticator"
-                android:resource="@xml/authenticator" />
+                android:resource="@xml/authenticator"/>
         </service>
 
 

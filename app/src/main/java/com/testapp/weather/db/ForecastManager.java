@@ -9,17 +9,12 @@ import com.testapp.weather.util.LogHelper;
 import java.util.List;
 
 /**
+ * Helper class to cover some work with add and clear forecast
  * Created on 24.12.2015.
  */
-public class ForecastManager {
+public final class ForecastManager {
 
     private static final java.lang.String LOG_TAG = LogHelper.makeLogTag(ForecastManager.class);
-
-    public static void updateForecast(Context _context, List<ForecastItem> _forecast) {
-        clearOldData(_context);
-        addForecast(_context, _forecast);
-        LogHelper.LOGD(LOG_TAG, "Forecast Updated");
-    }
 
     public static void addForecast(Context _context, List<ForecastItem> _forecast) {
         _context.getContentResolver()

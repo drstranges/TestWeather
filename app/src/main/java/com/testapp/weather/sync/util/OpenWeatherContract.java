@@ -7,9 +7,10 @@ import android.support.annotation.NonNull;
 import com.testapp.weather.BuildConfig;
 
 /**
+ * Contract for use OpenWeatherMap Api
  * Created on 23.12.2015.
  */
-public class OpenWeatherContract {
+public final class OpenWeatherContract {
     public static final String ROOT_URL = "http://api.openweathermap.org/";
     public static final String BASE_URL_DAILY_FORECAST = ROOT_URL + "data/2.5/forecast/daily?";
 

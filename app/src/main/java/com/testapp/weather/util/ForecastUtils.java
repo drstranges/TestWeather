@@ -10,19 +10,17 @@ import android.text.style.RelativeSizeSpan;
 import com.testapp.weather.R;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
 /**
- * Helper class to provide resource id according to the weather condition
+ * Helper class to simplify work with displaying weather
  * Created by d_rom on 25.12.2015.
  */
 public class ForecastUtils {
     public static final DateFormat DATE_FORMAT = new SimpleDateFormat("cccc, d MMMM", Locale.getDefault());
     public static final DateFormat DATE_FORMAT_SHORT = new SimpleDateFormat("cc, d MMMM", Locale.getDefault());
-//    public static final DateFormat MIDNIGHT_CONVERTER = new SimpleDateFormat("yyyyMMdd");
     public static final int MILLIS_IN_DAY = 24 * 60 * 60 * 1000;
 
     public enum WeatherCondition {
@@ -106,10 +104,6 @@ public class ForecastUtils {
         return direction;
     }
 
-    public static double kelvinToCelsius(double temp) {
-        return temp - 273.15;
-    }
-
     public static CharSequence getRelativeDate(Context _context, long _timeMillis) {
         final CharSequence relativeDate;
         if (DateUtils.isToday(_timeMillis)) {
@@ -133,14 +127,4 @@ public class ForecastUtils {
         sb.append(minTemp);
         return sb;
     }
-
-//    public static long getNormalizedDate(long _timeMillis) {
-//        Date midnight = new Date(_timeMillis);
-//        try {
-//            midnight = MIDNIGHT_CONVERTER.parse(MIDNIGHT_CONVERTER.format(midnight));
-//        } catch (ParseException _e) {
-//            _e.printStackTrace();
-//        }
-//        return midnight.getTime();
-//    }
 }

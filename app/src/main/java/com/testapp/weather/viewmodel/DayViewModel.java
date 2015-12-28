@@ -27,15 +27,11 @@ public class DayViewModel implements ViewModel, LoaderManager.LoaderCallbacks<Cu
     private Context mContext;
     private Callback mCallback;
     public ObservableBoolean isEmptyMessageVisible = new ObservableBoolean(false);
-    public ObservableBoolean isProgressVisible = new ObservableBoolean(false);
+//    public ObservableBoolean isProgressVisible = new ObservableBoolean(false);
     public ObservableField<ForecastItem> forecast = new ObservableField<>();
     public final long timeMillis;
 
     public interface Callback {
-        void onError(Exception _e);
-
-        void setTitle(String _title);
-
         void setBgColor(int _color);
     }
 
@@ -79,8 +75,6 @@ public class DayViewModel implements ViewModel, LoaderManager.LoaderCallbacks<Cu
         final boolean hasForecast = forecastItem != null;
         isEmptyMessageVisible.set(!hasForecast);
         if (hasForecast) {
-            mCallback.setTitle(
-                    ForecastUtils.getRelativeDate(mContext, forecastItem.dateTime).toString());
             mCallback.setBgColor(
                     mContext.getResources().getColor(
                             ForecastUtils.getWeatherCondition(forecastItem.weatherId).getColorResId()));
@@ -89,14 +83,6 @@ public class DayViewModel implements ViewModel, LoaderManager.LoaderCallbacks<Cu
 
 
     private static class EmptyCallback implements Callback {
-
-        @Override
-        public void onError(Exception _e) {
-        }
-
-        @Override
-        public void setTitle(String _title) {
-        }
 
         @Override
         public void setBgColor(int _color) {

@@ -10,8 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * BindingHolder
- * @param <VB>
+ * BindingHolder - extended RecyclerView.ViewHolder to use with data binding
+ * @param <VB> view binding class
  */
 public class BindingHolder<VB extends ViewDataBinding> extends RecyclerView.ViewHolder {
 

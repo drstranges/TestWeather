@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.Locale;
 
 /**
+ * Use this class to find ser location.
+ * Write location in preferences if found.
  * Created on 25.12.2015.
  */
 public class LocationLoader extends AsyncTaskLoader<String> {

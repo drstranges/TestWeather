@@ -8,6 +8,7 @@ import android.view.View;
 import com.testapp.weather.R;
 
 /**
+ * Provide dvider in the RecyclerView with LinearLayoutManager
  * Created on 25.12.15.
  */
 public class ItemDivider extends RecyclerView.ItemDecoration {

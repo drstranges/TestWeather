@@ -20,6 +20,9 @@ import android.util.Log;
 
 import com.testapp.weather.BuildConfig;
 
+/**
+ * Helper class for logging
+ */
 public class LogHelper {
     private static final String LOG_PREFIX = "testapp_";
     private static final int LOG_PREFIX_LENGTH = LOG_PREFIX.length();

@@ -24,16 +24,16 @@
             android:orientation="vertical"
             app:listConfig="@{viewModel.listConfig}"/>
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:indeterminate="true"
-            android:setVisibility="@{viewModel.isProgressVisible}"
-            android:visibility="gone"
-            />
+        <!--<ProgressBar-->
+            <!--android:id="@+id/progressBar"-->
+            <!--style="?android:attr/progressBarStyleLarge"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:indeterminate="true"-->
+            <!--android:setVisibility="@{viewModel.isProgressVisible}"-->
+            <!--android:visibility="gone"-->
+            <!--/>-->
 
         <TextView
             android:layout_width="wrap_content"

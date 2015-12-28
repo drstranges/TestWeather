@@ -1,14 +1,11 @@
 package com.testapp.weather.viewmodel;
 
 import android.content.Context;
-import android.database.ContentObserver;
 import android.database.Cursor;
 import android.databinding.ObservableBoolean;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.view.View;
 
@@ -19,7 +16,6 @@ import com.testapp.weather.db.DatabaseHelper;
 import com.testapp.weather.db.table.ForecastTable;
 import com.testapp.weather.model.ForecastItem;
 import com.testapp.weather.model.Model;
-import com.testapp.weather.sync.StatusReceiver;
 import com.testapp.weather.util.ObservedCursorLoader;
 import com.testapp.weather.util.binding.ClickAction;
 import com.testapp.weather.util.binding.OnActionClickListener;
@@ -41,12 +37,10 @@ public class WeekViewModel implements ViewModel, OnActionClickListener, LoaderMa
     public ListConfig listConfig;
     public BindableAdapter<ForecastItem> bindableAdapter;
     public ObservableBoolean isEmptyMessageVisible = new ObservableBoolean(false);
-    public ObservableBoolean isProgressVisible = new ObservableBoolean(false);
+//    public ObservableBoolean isProgressVisible = new ObservableBoolean(false);
     private final List<ForecastItem> mLoadedModels;
 
     public interface Callback {
-
-        void onError(Exception _e);
 
         void onForecastClicked(View _view, ForecastItem _forecast);
     }
@@ -115,11 +109,6 @@ public class WeekViewModel implements ViewModel, OnActionClickListener, LoaderMa
 
 
     private static class EmptyCallback implements Callback {
-
-        @Override
-        public void onError(Exception _e) {
-
-        }
 
         @Override
         public void onForecastClicked(View _view, ForecastItem _forecast) {

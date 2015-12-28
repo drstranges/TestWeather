@@ -9,7 +9,6 @@ import android.os.Build;
 import android.os.Bundle;
 
 import com.testapp.weather.R;
-import com.testapp.weather.db.table.ForecastTable;
 import com.testapp.weather.util.LogHelper;
 import com.testapp.weather.util.PrefUtils;
 
@@ -19,11 +18,10 @@ import java.util.concurrent.TimeUnit;
  * Helper class for manage syncing
  * Created on 25.12.2015.
  */
-public class SyncManager {
+public final class SyncManager {
 
     private static final String LOG_TAG = LogHelper.makeLogTag(SyncManager.class);
 
-    //    private static final long DEFAULT_SYNC_INTERVAL = TimeUnit.HOURS.toMillis(1); // 1 hour
     private static final long DEFAULT_SYNC_FLEXTIME = TimeUnit.MINUTES.toMillis(10); // 10 min
 
     public static void initializeSyncAdapter(Context _context) {
@@ -88,9 +86,5 @@ public class SyncManager {
         bundle.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
         ContentResolver.requestSync(getSyncAccount(_context),
                 _context.getString(R.string.forecast_content_authority), bundle);
-    }
-
-    public static void clearData(Context _context) {
-        _context.getContentResolver().delete(ForecastTable.CONTENT_URI, null, new String[]{});
     }
 }

@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created on 25.12.2015.
  */
-public class ForecastAdapter extends BindableAdapter<ForecastItem> {
+public final class ForecastAdapter extends BindableAdapter<ForecastItem> {
 
     private final OnActionClickListener mActionClickListener;
 
