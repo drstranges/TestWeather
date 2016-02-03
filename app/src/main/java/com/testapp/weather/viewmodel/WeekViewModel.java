@@ -16,7 +16,10 @@ import com.testapp.weather.db.DatabaseHelper;
 import com.testapp.weather.db.table.ForecastTable;
 import com.testapp.weather.model.ForecastItem;
 import com.testapp.weather.model.Model;
+import com.testapp.weather.sync.StatusReceiver;
+import com.testapp.weather.sync.util.SyncManager;
 import com.testapp.weather.util.ObservedCursorLoader;
+import com.testapp.weather.util.binding.BindableBoolean;
 import com.testapp.weather.util.binding.ClickAction;
 import com.testapp.weather.util.binding.OnActionClickListener;
 
@@ -27,17 +30,19 @@ import java.util.List;
 /**
  * Created on 25.12.2015.
  */
-public class WeekViewModel implements ViewModel, OnActionClickListener, LoaderManager.LoaderCallbacks<Cursor> {
+public class WeekViewModel implements ViewModel, OnActionClickListener, LoaderManager.LoaderCallbacks<Cursor>,StatusReceiver.SyncStatusListener {
 
     private static final int LOADER_ID_FORECAST = 2;
     public static final int FORECAST_DAY_COUNT = 7;
 
     private Context mContext;
     private Callback mCallback;
+    private final StatusReceiver mStatusReceiver;
     public ListConfig listConfig;
     public BindableAdapter<ForecastItem> bindableAdapter;
     public ObservableBoolean isEmptyMessageVisible = new ObservableBoolean(false);
 //    public ObservableBoolean isProgressVisible = new ObservableBoolean(false);
+    public BindableBoolean isRefreshing = new BindableBoolean();
     private final List<ForecastItem> mLoadedModels;
 
     public interface Callback {
@@ -52,6 +57,8 @@ public class WeekViewModel implements ViewModel, OnActionClickListener, LoaderMa
         mLoadedModels = new ArrayList<>(7);
         bindableAdapter = new ForecastAdapter(mLoadedModels, this);
         listConfig = getListConfig();
+        mStatusReceiver = new StatusReceiver(this);
+        mContext.registerReceiver(mStatusReceiver, StatusReceiver.getIntentFilter());
         _loaderManager.initLoader(LOADER_ID_FORECAST, null, this);
     }
 
@@ -65,10 +72,31 @@ public class WeekViewModel implements ViewModel, OnActionClickListener, LoaderMa
 
     @Override
     public void onDestroy() {
+        isRefreshing.set(false);
+        if (mContext != null && mStatusReceiver != null) mContext.unregisterReceiver(mStatusReceiver);
         mContext = null;
         mCallback = null;
     }
 
+    public void onRefresh() {
+        SyncManager.syncImmediately(mContext);
+        isRefreshing.set(false);
+    }
+
+    @Override
+    public void onSyncStarted() {
+        isRefreshing.set(true);
+    }
+
+    @Override
+    public void onSyncFinished() {
+        isRefreshing.set(false);
+    }
+
+    @Override
+    public void onSyncError(int _errorCode, String _message) {
+        isRefreshing.set(false);
+    }
 
     @Override
     public void onActionFired(View _view, ClickAction _action, Model _model) {

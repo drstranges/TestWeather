@@ -18,7 +18,15 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         android:background="@color/colorWindowBackground">
 
-        <android.support.v7.widget.RecyclerView
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/srlSwipeToRefresh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:setColorSchemeColors="@{@intArray/refresh_progress_colors}"
+            android:setOnRefreshListener="@{viewModel.onRefresh}"
+            app:isRefreshing="@{viewModel.isRefreshing}">
+
+            <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -26,6 +34,7 @@
             app:listConfig="@{viewModel.listConfig}"
             tools:listitem ="@layout/item_forecast"/>
 
+        </android.support.v4.widget.SwipeRefreshLayout>
         <!--<ProgressBar-->
             <!--android:id="@+id/progressBar"-->
             <!--style="?android:attr/progressBarStyleLarge"-->

@@ -4,6 +4,7 @@ import android.databinding.BindingAdapter;
 import android.databinding.BindingConversion;
 import android.support.annotation.ColorRes;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableStringBuilder;
 import android.view.View;
@@ -21,6 +22,11 @@ import com.testapp.weather.util.LogHelper;
  */
 public class Converters {
     private static final String LOG_TAG = LogHelper.makeLogTag(Converters.class);
+
+    @BindingConversion
+    public static boolean convertBindableToBoolean(BindableBoolean bindableBoolean) {
+        return bindableBoolean.get();
+    }
 
     @BindingConversion
     public static int convertBooleanToInt(boolean value) {
@@ -67,6 +73,12 @@ public class Converters {
     public static void setTemp(final TextView _view, final double _maxTemp, final double _minTemp) {
         final SpannableStringBuilder formattedTemp = ForecastUtils.getMaxMinTemp(_view.getContext(), _maxTemp, _minTemp);
         _view.setText(formattedTemp);
+    }
+
+    @BindingAdapter({"isRefreshing"})
+    public static void setRefreshing(final SwipeRefreshLayout _view,
+            final BindableBoolean _isRefreshing) {
+        _view.setRefreshing(_isRefreshing.get());
     }
 
 }
